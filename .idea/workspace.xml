@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bf33b7e7-4edf-4906-8196-3ea0a5cc9bd0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/symfony2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Controller/DefaultController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/hello.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.env.dist" afterPath="$PROJECT_DIR$/.env.dist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/bundles.php" afterPath="$PROJECT_DIR$/config/bundles.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.yaml" afterPath="$PROJECT_DIR$/config/routes.yaml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/services.yaml" afterPath="$PROJECT_DIR$/config/services.yaml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/symfony.lock" afterPath="$PROJECT_DIR$/symfony.lock" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,18 +21,59 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="bundles.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/config/bundles.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <splitter split-orientation="vertical" split-proportion="0.5">
+          <split-first>
+            <leaf>
+              <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="180">
+                      <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-first>
+          <split-second>
+            <leaf>
+              <file leaf-file-name="hello.html.twig" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/templates/hello.html.twig">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state relative-caret-position="0">
+                      <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
+                      <folding>
+                        <element signature="e#12#26#0#Twig" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-second>
+        </splitter>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="DefaultController.php" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="315">
+                  <caret line="21" column="30" lean-forward="false" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+                  <folding>
+                    <element signature="e#34#93#0#PHP" expanded="true" />
+                    <element signature="e#504#521#0#PHP" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,7 +81,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/config/bundles.php" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/config/packages/doctrine.yaml" />
         <option value="$PROJECT_DIR$/config/routes.yaml" />
+        <option value="$PROJECT_DIR$/config/services.yaml" />
+        <option value="$PROJECT_DIR$/src/Controller/DefaultController.php" />
+        <option value="$PROJECT_DIR$/templates/hello.html.twig" />
       </list>
     </option>
   </component>
@@ -81,21 +130,6 @@
             <path>
               <item name="kartokloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="kartokloud" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="kartokloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kartokloud" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="bin" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="kartokloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kartokloud" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="config" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="kartokloud" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kartokloud" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -107,7 +141,19 @@
             <path>
               <item name="kartokloud" type="b2602c69:ProjectViewProjectNode" />
               <item name="kartokloud" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="vendor" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Entity" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="kartokloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kartokloud" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Repository" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="kartokloud" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kartokloud" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="templates" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -143,17 +189,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1510496462469</updated>
-      <workItem from="1510497136256" duration="256000" />
+      <workItem from="1510497136256" duration="2906000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="256000" />
+    <option name="totallyTimeSpent" value="2906000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="26" width="1920" height="1026" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -183,44 +230,178 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/services.yaml">
+    <entry file="file://$PROJECT_DIR$/config/bundles.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="46" lean-forward="true" selection-start-line="27" selection-start-column="46" selection-end-line="27" selection-end-column="46" />
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
-            <marker date="1510495732193" expanded="true" signature="205:1257" ph="services: &lt;3 keys&gt;" />
-            <marker date="1510495732193" expanded="true" signature="275:689" ph="_defaults: &lt;3 keys&gt;" />
-            <marker date="1510495732193" expanded="true" signature="366:370" ph="true" />
-            <marker date="1510495732193" expanded="true" signature="479:483" ph="true" />
-            <marker date="1510495732193" expanded="true" signature="684:689" ph="false" />
-            <marker date="1510495732193" expanded="true" signature="838:1029" ph="App\: &lt;2 keys&gt;" />
-            <marker date="1510495732193" expanded="true" signature="862:872" ph="../src/*" />
-            <marker date="1510495732193" expanded="true" signature="995:1029" ph="../src/{E…ons,Tests}" />
-            <marker date="1510495732193" expanded="true" signature="1156:1257" ph="App\Controller\: &lt;2 keys&gt;" />
-            <marker date="1510495732193" expanded="true" signature="1191:1210" ph="../src/Controller" />
-            <marker date="1510495732193" expanded="true" signature="1219:1257" ph="tags: [1 item]" />
-            <marker date="1510495732193" expanded="true" signature="1226:1256" ph="controlle…_arguments" />
+            <marker date="1510499063437" expanded="true" signature="15:652" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1510495732193" expanded="false" signature="11:140" ph="..." />
+            <marker date="1510495732193" expanded="true" signature="278:325" ph="..." />
+            <marker date="1510495732193" expanded="true" signature="403:443" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/doctrine.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="19" lean-forward="true" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+          <folding>
+            <marker date="1510498448686" expanded="true" signature="0:487" ph="doctrine: &lt;2 keys&gt;" />
+            <marker date="1510498448686" expanded="true" signature="14:111" ph="dbal: &lt;1 key&gt;" />
+            <marker date="1510498448686" expanded="true" signature="90:111" ph="%env(DATABASE_URL)%" />
+            <marker date="1510498448686" expanded="true" signature="116:487" ph="orm: &lt;4 keys&gt;" />
+            <marker date="1510498448686" expanded="true" signature="158:174" ph="%kernel.debug%" />
+            <marker date="1510498448686" expanded="true" signature="200:239" ph="doctrine.…underscore" />
+            <marker date="1510498448686" expanded="true" signature="262:266" ph="true" />
+            <marker date="1510498448686" expanded="true" signature="275:487" ph="mappings: &lt;1 key&gt;" />
+            <marker date="1510498448686" expanded="true" signature="297:487" ph="App: &lt;5 keys&gt;" />
+            <marker date="1510498448686" expanded="true" signature="329:334" ph="false" />
+            <marker date="1510498448686" expanded="true" signature="357:367" ph="annotation" />
+            <marker date="1510498448686" expanded="true" signature="389:422" ph="%kernel.p…src/Entity" />
+            <marker date="1510498448686" expanded="true" signature="447:460" ph="App\Entity\" />
+            <marker date="1510498448686" expanded="true" signature="484:487" ph="App" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/easy_admin.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/framework.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1510495732193" expanded="true" signature="0:388" ph="framework: &lt;2 keys&gt;" />
+            <marker date="1510495732193" expanded="true" signature="23:42" ph="%env(APP_SECRET)%" />
+            <marker date="1510495732193" expanded="true" signature="359:388" ph="php_errors: &lt;1 key&gt;" />
+            <marker date="1510495732193" expanded="true" signature="384:388" ph="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/routing.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1510495732189" expanded="true" signature="0:53" ph="framework: &lt;1 key&gt;" />
+            <marker date="1510495732189" expanded="true" signature="15:53" ph="router: &lt;1 key&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/security.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1510497587334" expanded="true" signature="0:305" ph="security: &lt;2 keys&gt;" />
+            <marker date="1510497587334" expanded="true" signature="111:154" ph="providers: &lt;1 key&gt;" />
+            <marker date="1510497587334" expanded="true" signature="130:154" ph="in_memory: {1 key}" />
+            <marker date="1510497587334" expanded="true" signature="159:305" ph="firewalls: &lt;2 keys&gt;" />
+            <marker date="1510497587334" expanded="true" signature="178:266" ph="dev: &lt;2 keys&gt;" />
+            <marker date="1510497587334" expanded="true" signature="204:238" ph="^/(_(prof…mages|js)/" />
+            <marker date="1510497587334" expanded="true" signature="261:266" ph="false" />
+            <marker date="1510497587334" expanded="true" signature="275:305" ph="main: &lt;1 key&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/twig.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1510497587334" expanded="true" signature="0:118" ph="twig: &lt;3 keys&gt;" />
+            <marker date="1510497587334" expanded="true" signature="10:51" ph="paths: [1 item]" />
+            <marker date="1510497587334" expanded="true" signature="18:50" ph="%kernel.p…/templates" />
+            <marker date="1510497587334" expanded="true" signature="63:79" ph="%kernel.debug%" />
+            <marker date="1510497587334" expanded="true" signature="102:118" ph="%kernel.debug%" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/twig_extensions.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1510497587330" expanded="true" signature="0:97" ph="services: &lt;1 key&gt;" />
+            <marker date="1510497587330" expanded="true" signature="14:97" ph="_defaults: &lt;3 keys&gt;" />
+            <marker date="1510497587330" expanded="true" signature="41:46" ph="false" />
+            <marker date="1510497587330" expanded="true" signature="65:69" ph="true" />
+            <marker date="1510497587330" expanded="true" signature="93:97" ph="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        <state relative-caret-position="30">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/services.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="30" lean-forward="false" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
           <folding>
-            <marker date="1510497258250" expanded="true" signature="134:200" ph="controllers: &lt;2 keys&gt;" />
-            <marker date="1510497258250" expanded="true" signature="161:179" ph="../src/Controller/" />
-            <marker date="1510497258250" expanded="true" signature="190:200" ph="annotation" />
+            <element signature="e#34#93#0#PHP" expanded="true" />
+            <element signature="e#504#521#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/bundles.php">
+    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="180">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/hello.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
