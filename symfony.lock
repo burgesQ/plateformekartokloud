@@ -250,5 +250,11 @@
             "version": "3.3",
             "ref": "c72d107d077f1654428edaed69415d0228c1aefe"
         }
+    },
+    "symfony/templating": {
+        "version": "v3.3.11"
+    },
+    "friendsofsymfony/user-bundle": {
+        "version": "v2.0.1"
     }
 }
