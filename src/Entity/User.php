@@ -104,6 +104,11 @@ class User extends BaseUser
     private $lastName;
 
     /**
+     * @var Company
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="user")
+     */
+    private $company;
+    /**
      * User constructor.
      */
     public function __construct()
@@ -250,4 +255,21 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * @return Company
+     */
+    public function getCompany(): Company
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param Company $company
+     */
+    public function setCompany(Company $company): void
+    {
+        $this->company = $company;
+    }
+
 }
