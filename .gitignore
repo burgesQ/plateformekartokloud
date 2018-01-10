@@ -8,3 +8,5 @@
 .web-server-pid
 ###< symfony/web-server-bundle ###
 /.idea/
+###< node ###
+/node_modules
