@@ -1,19 +1,23 @@
-# plateformekartokloud
+# plateformekartoukloud
 
-Capston Project for EPITECH Berlin, 2017/2018
+Epitech Berlin Capstone Project 2018-2019
 
-Process to deploy the project :
+
+## Process to deploy the project
 
 ```bash
-$ sf doctrine:database:create
-$ sf doctrine:schema:validate
-$ sf doctrine:schema:update --force
+$ composer install -vvv
+$ ./scrit/genDb
 ```
 
-The project is based on the latest sensioLab php framework : Symfony Flex.
+## Front dep
 
-Todo :
- - [x] User Entity
- - [] Test User entity
- - [] Companies entity
- - [] Relations
+Use of [node](https://nodejs.org/en/download/) and [yarn](http://symfony.com/doc/current/frontend/encore/installation.html) for the front.
+
+Front source files are located in the `asset/` sub directories.
+
+Run `./node_modules/.bin/encore dev --watch` to run the watch command.
+
+## TODO
+
+[Todo](./TODO)

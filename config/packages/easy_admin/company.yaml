@@ -1,0 +1,17 @@
+easy_admin:
+    entities:
+        Company:
+            class: 'App\Entity\Company'
+            label: 'Companies'
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'name' }
+                    - { property: 'creationDate' }
+                    - { property: 'updateDate' }
+                    - { property: 'users' }
+
+            form:
+                fields:
+                    - { property: 'name' }
+                    - { property: 'users' }

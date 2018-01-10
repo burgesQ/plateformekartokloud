@@ -4,23 +4,17 @@ namespace App\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
     /**
-     * @Route(
-     *     "/hello/{name}",
-     *     requirements={"name" = "\w"},
-     *     defaults={"name" = "caca"}
-     * )
+     * @Route("/")
      *
-     * @param $name
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('hello.html.twig', [
-            'name' => $name
-        ]);
+        return $this->redirectToRoute('app_home_home');
     }
 }

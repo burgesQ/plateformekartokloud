@@ -1,0 +1,27 @@
+{% block navbar %}
+
+
+    <nav class="navbar head-navbar">
+        {% if app.user != null %}
+            <a class="navbar-brand" id="slider-btn">
+                <button type="button" id="sidebarCollapse" class="navbar-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </a>
+        {% endif %}
+    </nav>
+
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-danger flash-{{ type }} alert-dismissable fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

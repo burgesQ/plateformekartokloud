@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class User
@@ -105,9 +105,10 @@ class User extends BaseUser
 
     /**
      * @var Company
-     * @ORM\ManyToOne(targetEntity="Company", inversedBy="user")
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="users")
      */
     private $company;
+
     /**
      * User constructor.
      */
@@ -259,7 +260,7 @@ class User extends BaseUser
     /**
      * @return Company
      */
-    public function getCompany(): Company
+    public function getCompany(): ?Company
     {
         return $this->company;
     }

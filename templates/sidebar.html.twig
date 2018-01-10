@@ -1,0 +1,57 @@
+{% block sidebar %}
+
+    <nav id="sidebar">
+
+        <!-- Sidebar Header -->
+        <div class="sidebar-header" onclick="pageLoader('{{ path('app_view_byclass', { 'component' : 'map'}) }}', {})">
+            <h3>
+                SouSound
+            </h3>
+            <strong><img src="{{ asset('./favicons/favicon.ico') }}"
+                         style="max-height: 100%;max-width: 100%;"/></strong>
+        </div>
+
+        <ul class="list-unstyled components">
+
+
+            {% if app.user != null %}
+
+                <li>
+                    <a href="#companySubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-link"></i>
+                        Company Info
+                    </a>
+                    <ul class="collapse list-unstyled" id="companySubmenu">
+                        <li><a href="#">Edit Company</a></li>
+                        <li><a href="#">New Company</a></li>
+                    </ul>
+                </li>
+            {% endif %}
+
+            <li>
+                <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-user"></i>
+                    User Info
+                </a>
+                <ul class="collapse list-unstyled" id="userSubmenu">
+
+                    {% if app.user != null %}
+                        <li><a href="{{ path('fos_user_profile_show') }}">My Profile</a></li>
+                        <li><a href="{{ path('fos_user_profile_edit') }}">Edit info</a></li>
+
+                        <li><a href="{{ path('fos_user_security_logout') }}">LogOut</a></li>
+                        <li><a href="{{ path('easyadmin') }}">Backlog</a></li>
+                    {% else %}
+                        <li><a href="{{ path('fos_user_security_login') }}">LogIn</a></li>
+                        <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
+                    {% endif %}
+
+                </ul>
+            </li>
+
+
+        </ul>
+
+    </nav>
+
+{% endblock %}

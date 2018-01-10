@@ -1,0 +1,21 @@
+easy_admin:
+    entities:
+        User:
+            class: 'App\Entity\User'
+            label: 'Users'
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'email' }
+                    - { property: 'firstName' }
+                    - { property: 'lastName' }
+                    - { property: 'lastLogin' }
+                    - { property: 'company' }
+
+            form:
+                fields:
+                    - { property: 'email' }
+                    - { property: 'firstName' }
+                    - { property: 'lastName' }
+                    - { property: 'plainPassword', type: 'password' }
+                    - { property: 'company' }

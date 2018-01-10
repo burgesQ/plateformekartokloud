@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    {% set user = app.user %}
+
+    <div id="dynamic_content">
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+
+        function pageLoader(route, arrayOptions) {
+
+            $.ajax({
+                url: route,
+                method: "get",
+                data: arrayOptions
+            }).done(function (msg) {
+                // console.log(msg);
+                $('#dynamic_content').val('');
+                $('#dynamic_content').html(msg);
+            });
+        }
+
+        $(document).ready(function() {
+            pageLoader('{{ path('app_view_byclass', { 'component' : 'map'}) }}', {});
+        })
+
+    </script>
+
+{% endblock %}

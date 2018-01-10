@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mikaz3
- * Date: 12/12/17
- * Time: 12:10 PM
- */
 
 namespace App\Entity;
 
@@ -29,6 +23,18 @@ class Company
     protected $id;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="creation_date", type="datetime", nullable=false)
+     */
+    private $creationDate;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="update_date", type="datetime", nullable=false)
+     */
+    private $updateDate;
+
+    /**
      * @var string
      * @ORM\Column(name="name", type="string")
      */
@@ -41,11 +47,68 @@ class Company
     private $users;
 
     /**
+     * Company constructor.
+     */
+    public function __construct()
+    {
+        $this->creationDate = new \Datetime();
+        $this->updateDate   = new \Datetime();
+    }
+
+    /**
      * @return int
      */
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * Get CreationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate() : \DateTime
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * Set CreationDate
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return Company
+     */
+    public function setCreationDate(\DateTime $creationDate) : Company
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get UpdateDate
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDate() : \DateTime
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set UpdateDate
+     *
+     * @param \DateTime $updateDate
+     *
+     * @return Company
+     */
+    public function setUpdateDate(\DateTime $updateDate) : Company
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
     }
 
     /**
@@ -87,5 +150,4 @@ class Company
     {
         $this->users = $users;
     }
-
 }
