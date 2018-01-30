@@ -4,9 +4,15 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
 ###> symfony/web-server-bundle ###
 .web-server-pid
 ###< symfony/web-server-bundle ###
-/.idea/
-###< node ###
+
+###> node ###
 /node_modules
+###< node ###
+
+###> pStorm ###
+/.idea
+###< pStorm ###
