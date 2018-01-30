@@ -1,0 +1,11 @@
+{
+"TOTAL_MEMORY": 536870912,
+"dataUrl": "KartoCloudProto.data.unityweb",
+"asmCodeUrl": "KartoCloudProto.asm.code.unityweb",
+"asmMemoryUrl": "KartoCloudProto.asm.memory.unityweb",
+"asmFrameworkUrl": "KartoCloudProto.asm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}
