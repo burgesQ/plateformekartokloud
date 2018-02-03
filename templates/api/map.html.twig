@@ -1,5 +1,14 @@
 {% block body %}
-
-    {#<iframe src="unity/index.html" height="800px" width="100%"></iframe>#}
-
+    <script>
+      var gameInstance = UnityLoader.instantiate("gameContainer", "unity/Build/Build.json", {onProgress: UnityProgress});
+    </script>
+    
+    <div class="webgl-content">
+      <div id="gameContainer" style="width: 960px; height: 600px"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
+        <div class="title">Prototype</div>
+      </div>
+    </div>
 {% endblock %}
