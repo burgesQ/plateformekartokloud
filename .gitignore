@@ -1,16 +1,14 @@
 ###> symfony/framework-bundle ###
 .env
-.idea/
-.idea/workspace.xml
 /public/bundles/
 /var/
 /vendor/
+*.lock
 ###< symfony/framework-bundle ###
 
 ###> symfony/web-server-bundle ###
 .web-server-pid
 ###< symfony/web-server-bundle ###
-<<<<<<< HEAD
 
 ###> node ###
 /node_modules
@@ -19,6 +17,3 @@
 ###> pStorm ###
 /.idea
 ###< pStorm ###
-=======
-/.idea/
->>>>>>> Company entity added + fixtures
