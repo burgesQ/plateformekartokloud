@@ -3,6 +3,7 @@
 /public/bundles/
 /var/
 /vendor/
+*.lock
 ###< symfony/framework-bundle ###
 
 ###> symfony/web-server-bundle ###

@@ -108,7 +108,6 @@ class User extends BaseUser
      * @ORM\ManyToOne(targetEntity="Company", inversedBy="users")
      */
     private $company;
-
     /**
      * User constructor.
      */
