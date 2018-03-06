@@ -2,12 +2,12 @@
 
 namespace App\Helper;
 
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class ControllerHelper extends Controller
+class APIControllerHelper extends Controller
 {
     /**
      * @param  Request       $request
@@ -24,5 +24,4 @@ class ControllerHelper extends Controller
 
         $form->submit($data, $clearMissing);
     }
-
 }

@@ -14,18 +14,16 @@ use App\Entity\Track;
  */
 class ViewController extends Controller
 {
-
     private $arrayClass = [
-        'map'   => [
-            'route' => 'api/map.html.twig',
-        ],
+        'map'   => [ 'route' => 'api/map.html.twig' ],
     ];
 
     /**
      * @Route(
      *     "/{component}",
      *     requirements={
-     *         "class"="map"
+     *         "class"="map",
+     *         "class"="company/create"
      *     }
      * )
      *
