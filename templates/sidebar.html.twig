@@ -6,13 +6,14 @@
         <div class="sidebar-header" onclick="pageLoader('{{ path('app_view_byclass', { 'component' : 'map'}) }}', {})">
             <h3>
                 KartoKloud
-            </h3>
+            </h3>{% if app.user and app.user.company %}
+            <br />
+            <h4> Company :  {{ app.user.company.company.name  }}</h4>{% endif %}
             <strong><img src="{{ asset('./favicons/favicon.ico') }}"
                          style="max-height: 100%;max-width: 100%;"/></strong>
         </div>
 
         <ul class="list-unstyled components">
-
 
             {% if app.user != null %}
 

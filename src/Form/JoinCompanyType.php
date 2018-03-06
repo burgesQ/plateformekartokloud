@@ -8,32 +8,41 @@
 
 namespace App\Form;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\AbstractType;
 use App\Entity\Company;
+use App\Entity\User;
 
 class JoinCompanyType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
-        $builder->add('company', EntityType::class, [
-            'class' => Company::class,
-            'choices' => $options['companies'],
-            'choice_label' => 'name'
-        ]);
-        $builder->add('submit', SubmitType::class);
+        $builder
+            ->add('company', EntityType::class, [
+                'class'        => Company::class,
+                'choices'      => $options['companies'],
+                'choice_label' => 'name',
+                'mapped'       => false,
+            ])
+            ->add('submit', SubmitType::class)
+        ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver) : void
     {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-            'validation_groups' => false
-        ]);
-        $resolver->setRequired(['companies']);
+        $resolver->setDefaults(
+            ['data_class'        => null,
+             'validation_groups' => false])
+                 ->setRequired(['companies']);
     }
 }

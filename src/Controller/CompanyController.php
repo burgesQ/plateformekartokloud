@@ -2,17 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Company;
-use App\Entity\User;
+use App\Entity\UserCompany;
+use Doctrine\ORM\EntityManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use App\Helper\APIControllerHelper;
 use App\Form\CompanyFormType;
 use App\Form\JoinCompanyType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use App\Helper\ControllerHelper;
+use App\Entity\Company;
+use App\Entity\User;
 
-class CompanyController extends ControllerHelper
+class CompanyController extends APIControllerHelper
 {
     /**
      * @Route("/company/create")
@@ -48,24 +49,36 @@ class CompanyController extends ControllerHelper
      */
     public function joinCompanyAction(Request $request)
     {
-        $companies = $this->getDoctrine()->getRepository('App:Company')->findAll(Company::class);
+        $em = $this->getDoctrine()->getManager();
 
-        /**
-         * @var $user User
-         */
+        /** @var $user User */
         $user = $this->getUser();
 
-        $form = $this->createForm(JoinCompanyType::class, $user, [
-            'companies' => $companies
+        $data = [];
+        $form = $this->createForm(JoinCompanyType::class, $data, [
+            'companies' => $this->getDoctrine()->getRepository('App:Company')->findAll(Company::class)
         ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->persist($this->getUser());
-            $this->getDoctrine()->getManager()->flush();
+
+            $company = $form->get('company')->getData();
+
+            $userCompany = new UserCompany();
+            // if no user accepted in the company, set default to true
+            $userCompany->setAccepted(true);
+
+            $em->persist($userCompany);
+            $em->flush();
+
+            $userCompany->setCompany($company);
+            $userCompany->setUser($user);
+            $em->flush();
 
             return $this->redirectToRoute('app_home_home');
         }
+
         return $this->render('api/join_company.html.twig', [
             'form' => $form->createView()
         ]);

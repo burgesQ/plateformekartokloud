@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * Class Company
@@ -41,8 +43,8 @@ class Company
     private $name;
 
     /**
-     * @var User
-     * @ORM\OneToMany(targetEntity="User", mappedBy="company")
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="UserCompany", mappedBy="company")
      */
     private $users;
 
@@ -53,6 +55,7 @@ class Company
     {
         $this->creationDate = new \Datetime();
         $this->updateDate   = new \Datetime();
+        $this->users        = new ArrayCollection();
     }
 
     /**
@@ -136,18 +139,40 @@ class Company
     }
 
     /**
-     * @return User
+     * Get Users
+     *
+     * @return ArrayCollection|PersistentCollection
      */
-    public function getUsers(): User
+    public function getUsers() : PersistentCollection
     {
         return $this->users;
     }
 
     /**
-     * @param User $users
+     * Add User
+     *
+     * @param UserCompany $user
+     *
+     * @return Company
      */
-    public function setUsers(User $users): void
+    public function addUsers(UserCompany $user) : Company
     {
-        $this->users = $users;
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove Users
+     *
+     * @param UserCompany $user
+     *
+     * @return Company
+     */
+    public function removeUsers(UserCompany $user) : ?Company
+    {
+        $this->users->remove($user);
+
+        return $this;
     }
 }
