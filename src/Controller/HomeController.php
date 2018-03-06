@@ -9,6 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
+     * @Route("/")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction()
+    {
+        return $this->redirectToRoute('app_home_home');
+    }
+
+    /**
      * @Route("/home")
      *
      * @return Response
@@ -19,5 +29,4 @@ class HomeController extends Controller
             'home' => true
         ]);
     }
-
 }

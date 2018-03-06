@@ -37,5 +37,4 @@ class ViewController extends Controller
     {
         return $this->render($this->arrayClass[$component]['route'], []);
     }
-
 }
