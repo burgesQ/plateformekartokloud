@@ -3,8 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
+use JMS\Serializer\Annotation as JMS;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Company
@@ -13,6 +14,7 @@ use Doctrine\ORM\PersistentCollection;
  * @ORM\Entity
  * @ORM\Table(name="company")
  * @ORM\HasLifecycleCallbacks()
+ * @JMS\ExclusionPolicy("all")
  */
 class Company
 {
@@ -39,6 +41,7 @@ class Company
     /**
      * @var string
      * @ORM\Column(name="name", type="string")
+     * @JMS\Expose()
      */
     private $name;
 
@@ -47,6 +50,14 @@ class Company
      * @ORM\OneToMany(targetEntity="UserCompany", mappedBy="company")
      */
     private $users;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Map", mappedBy="company")
+     * @JMS\Expose()
+     * @JMS\MaxDepth(1)
+     */
+    private $maps;
 
     /**
      * Company constructor.
@@ -175,4 +186,44 @@ class Company
 
         return $this;
     }
+
+    /**
+     * Get Maps
+     *
+     * @return ArrayCollection|PersistentCollection
+     */
+    public function getMaps() : PersistentCollection
+    {
+        return $this->maps;
+    }
+
+    /**
+     * Add Map
+     *
+     * @param Map $map
+     *
+     * @return Company
+     */
+    public function addMap(Map $map) : Company
+    {
+        $this->maps[] = $map;
+
+        return $this;
+    }
+
+    /**
+     * Remove Map
+     *
+     * @param Map $map
+     *
+     * @return Company
+     */
+    public function removeMap(Map $map) : ?Company
+    {
+        $this->maps->remove($map);
+
+        return $this;
+    }
+
+
 }

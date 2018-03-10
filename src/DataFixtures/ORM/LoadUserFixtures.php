@@ -2,12 +2,12 @@
 
 namespace App\DataFixtures\ORM;
 
-use App\Helper\TrackGeneratorHelper;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\User;
 
-class LoadUserFixtures extends AbstractFixture
+class LoadUserFixtures extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * Array of the different users.
@@ -61,8 +61,5 @@ class LoadUserFixtures extends AbstractFixture
      *
      * @return int
      */
-    function getOrder()
-    {
-        return 2;
-    }
+    function getOrder() { return 2; }
 }

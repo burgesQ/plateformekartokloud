@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\Table(name="map")
+ * @JMS\ExclusionPolicy("all")
  * @ORM\HasLifecycleCallbacks()
  */
 class Map
@@ -41,12 +44,31 @@ class Map
     // we should have a array of data & pos     /** @MaxDepth(1) */
 
     /**
+     * @var Company
+     *
+     * @ORM\ManyToOne(targetEntity="Company", inversedBy="maps")
+     * @JMS\Expose()
+     * @JMS\MaxDepth(1)
+     */
+    private $company;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="KartoVmMap", mappedBy="map")
+     * @JMS\Expose()
+     * @JMS\MaxDepth(3)
+     */
+    private $kartoVms;
+
+    /**
      * Company constructor.
      */
     public function __construct()
     {
         $this->creationDate = new \Datetime();
         $this->updateDate   = new \Datetime();
+        $this->kartoVms     = new ArrayCollection();
     }
 
     /**
@@ -101,6 +123,68 @@ class Map
     public function setUpdateDate(\DateTime $updateDate) : Map
     {
         $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get Company
+     *
+     * @return Company
+     */
+    public function getCompany() : Company
+    {
+        return $this->company;
+    }
+
+    /**
+     * Set Company
+     *
+     * @param Company $company
+     *
+     * @return Map
+     */
+    public function setCompany(Company $company) : Map
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * Get KartoVms
+     *
+     * @return ArrayCollection|PersistentCollection
+     */
+    public function getKartoVms() : PersistentCollection
+    {
+        return $this->kartoVms;
+    }
+
+    /**
+     * Add KartoVm
+     *
+     * @param KartoVmMap $kartoVm
+     *
+     * @return Map
+     */
+    public function addKartoVm(KartoVmMap $kartoVm) : Map
+    {
+        $this->kartoVms[] = $kartoVm;
+
+        return $this;
+    }
+
+    /**
+     * Remove Map
+     *
+     * @param KartoVmMap $kartoVm
+     *
+     * @return Map
+     */
+    public function removeKartoVm(KartoVmMap $kartoVm) : Map
+    {
+        $this->kartoVms->remove($kartoVm);
 
         return $this;
     }

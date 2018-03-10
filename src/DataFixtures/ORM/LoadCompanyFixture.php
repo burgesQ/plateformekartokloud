@@ -1,21 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mikaz3
- * Date: 12/12/17
- * Time: 12:55 PM
- */
 
 namespace App\DataFixtures\ORM;
 
-use App\Entity\Company;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadCompanyFixture extends Fixture
+use App\Entity\Company;
+
+class LoadCompanyFixture extends AbstractFixture implements OrderedFixtureInterface
 {
+    /**
+     * @var array
+     */
     private $arrayCompany = [ "KartoKloud", "Donut", "ThinkEat"];
 
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         foreach ($this->arrayCompany as $oneCompany) {
@@ -25,4 +27,11 @@ class LoadCompanyFixture extends Fixture
         }
         $manager->flush();
     }
+
+    /**
+     * Loading order of the fixture.
+     *
+     * @return int
+     */
+    function getOrder() { return 1; }
 }
