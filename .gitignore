@@ -17,3 +17,7 @@
 ###> pStorm ###
 /.idea/workspace.xml
 ###< pStorm ###
+
+###< kartoklooud ###
+/jsonData/*
+###
