@@ -66,7 +66,7 @@ class JsonToDatabaseCommand extends Command
     }
 
     /**
-     * @param string $data
+     * @param string $path
      *
      * @return mixed
      */

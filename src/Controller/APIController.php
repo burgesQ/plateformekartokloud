@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Company;
+use App\Entity\DailyKartoVm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,6 +99,28 @@ class APIController extends APIControllerHelper
         return $this->createApiResponse(
             $this->getDoctrine()
                  ->getRepository(KartoVm::class)
+                 ->findAll()
+        );
+    }
+
+    /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return the list of karto vm",
+     *     @Model(type=DailyKartoVm::class)
+     * )
+     * @SWG\Response(
+     *     response=403,
+     *     description="User not logged",
+     *     @SWG\Schema(type="string")
+     * )
+     * @Security("has_roles('ROLE_USER')")
+     * @Rest\Get("/api/v1/daily_karto_vm")
+     */
+    public function getDailyKartoVmAction() {
+        return $this->createApiResponse(
+            $this->getDoctrine()
+                 ->getRepository(DailyKartoVm::class)
                  ->findAll()
         );
     }
