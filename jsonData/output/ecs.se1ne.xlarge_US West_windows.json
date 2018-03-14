@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.se1ne.xlarge', 'nb_cpu': '4', 'nb_ram': '32', 'monthly_cost': '281.45', 'cost': '0.498', 'region': 'US West', 'os': 'windows', 'provider': 'alicloud'}

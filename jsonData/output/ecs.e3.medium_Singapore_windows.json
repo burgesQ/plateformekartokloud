@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.e3.medium', 'nb_cpu': '2', 'nb_ram': '16', 'monthly_cost': '138.9', 'cost': '0.249', 'region': 'Singapore', 'os': 'windows', 'provider': 'alicloud'}

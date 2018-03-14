@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-N1-STANDARD-2-PREEMPTIBLE', 'nb_cpu': '2', 'nb_ram': '7.5', 'cost': 0.0246, 'provider': 'googlecloud', 'region': 'europe-west3'}

@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.n1.tiny', 'nb_cpu': '1', 'nb_ram': '1', 'monthly_cost': '12.6', 'cost': '0.021', 'region': 'Middle East', 'os': 'windows', 'provider': 'alicloud'}

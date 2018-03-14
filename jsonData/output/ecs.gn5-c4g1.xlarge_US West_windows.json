@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.gn5-c4g1.xlarge', 'nb_cpu': '4', 'nb_ram': '30', 'monthly_cost': '1064.57', 'cost': '2.217', 'region': 'US West', 'os': 'windows', 'provider': 'alicloud'}

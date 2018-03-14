@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-G1-SMALL', 'nb_cpu': 'shared', 'nb_ram': '1.7', 'cost': 0.027, 'provider': 'googlecloud', 'region': 'us'}

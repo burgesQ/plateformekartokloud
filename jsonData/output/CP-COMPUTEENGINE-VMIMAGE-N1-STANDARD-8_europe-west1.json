@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-N1-STANDARD-8', 'nb_cpu': '8', 'nb_ram': '30', 'cost': 0.4184, 'provider': 'googlecloud', 'region': 'europe-west1'}

@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.cm4.xlarge', 'nb_cpu': '4', 'nb_ram': '16', 'monthly_cost': '301.62', 'cost': '0.5', 'region': 'EU Central', 'os': 'windows', 'provider': 'alicloud'}

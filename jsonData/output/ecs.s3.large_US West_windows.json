@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.s3.large', 'nb_cpu': '4', 'nb_ram': '8', 'monthly_cost': '69.6', 'cost': '0.221', 'region': 'US West', 'os': 'windows', 'provider': 'alicloud'}

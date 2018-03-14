@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'droplet_32_192', 'nb_cpu': '32', 'nb_ram': '192', 'cost': '1.429', 'region': 'none', 'disk_size': '3,840', 'network': '12 TB', 'provider': 'digitalocean'}

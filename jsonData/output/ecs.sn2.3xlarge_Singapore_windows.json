@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.sn2.3xlarge', 'nb_cpu': '16', 'nb_ram': '64', 'monthly_cost': '981.13', 'cost': '1.718', 'region': 'Singapore', 'os': 'windows', 'provider': 'alicloud'}

@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.c1.large', 'nb_cpu': '8', 'nb_ram': '16', 'monthly_cost': '127.4', 'cost': '0.401', 'region': 'China North 1', 'os': 'windows', 'provider': 'alicloud'}

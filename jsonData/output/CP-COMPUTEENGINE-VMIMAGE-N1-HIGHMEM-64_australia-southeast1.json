@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-N1-HIGHMEM-64', 'nb_cpu': '64', 'nb_ram': '416', 'cost': 5.3725, 'provider': 'googlecloud', 'region': 'australia-southeast1'}

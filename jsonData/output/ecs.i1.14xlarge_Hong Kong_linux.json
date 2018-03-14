@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.i1.14xlarge', 'nb_cpu': '56', 'nb_ram': '224', 'monthly_cost': '1714.08', 'cost': '3.571', 'region': 'Hong Kong', 'os': 'linux', 'provider': 'alicloud'}

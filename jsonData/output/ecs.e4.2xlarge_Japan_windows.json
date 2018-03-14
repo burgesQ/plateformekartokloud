@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.e4.2xlarge', 'nb_cpu': '8', 'nb_ram': '64', 'monthly_cost': '557.35', 'cost': '0.997', 'region': 'Japan', 'os': 'windows', 'provider': 'alicloud'}

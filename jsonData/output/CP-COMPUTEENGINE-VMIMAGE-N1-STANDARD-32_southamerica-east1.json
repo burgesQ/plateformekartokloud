@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-N1-STANDARD-32', 'nb_cpu': '32', 'nb_ram': '120', 'cost': 2.4136, 'provider': 'googlecloud', 'region': 'southamerica-east1'}

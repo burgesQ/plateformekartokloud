@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-F1-MICRO-PREEMPTIBLE', 'nb_cpu': 'shared', 'nb_ram': '0.6', 'cost': 0.0052, 'provider': 'googlecloud', 'region': 'southamerica-east1'}

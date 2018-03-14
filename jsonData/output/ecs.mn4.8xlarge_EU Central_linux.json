@@ -1,1 +1,0 @@
-{'type': 'VM', 'name': 'ecs.mn4.8xlarge', 'nb_cpu': '32', 'nb_ram': '128', 'monthly_cost': '947.03', 'cost': '1.9', 'region': 'EU Central', 'os': 'linux', 'provider': 'alicloud'}
