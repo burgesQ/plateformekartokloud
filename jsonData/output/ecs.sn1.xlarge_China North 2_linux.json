@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'ecs.sn1.xlarge', 'nb_cpu': '8', 'nb_ram': '16', 'monthly_cost': '151', 'cost': '0.525', 'region': 'China North 2', 'os': 'linux', 'provider': 'alicloud'}

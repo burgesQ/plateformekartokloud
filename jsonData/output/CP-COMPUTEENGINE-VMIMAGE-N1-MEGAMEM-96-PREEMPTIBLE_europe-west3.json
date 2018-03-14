@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-N1-MEGAMEM-96-PREEMPTIBLE', 'nb_cpu': '96', 'nb_ram': '1440', 'cost': 0, 'provider': 'googlecloud', 'region': 'europe-west3'}

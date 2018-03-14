@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'ecs.sn1ne.4xlarge', 'nb_cpu': '16', 'nb_ram': '32', 'monthly_cost': '316.98', 'cost': '1.101', 'region': 'China East 2', 'os': 'windows', 'provider': 'alicloud'}

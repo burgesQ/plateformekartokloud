@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'ecs.n1.7xlarge', 'nb_cpu': '32', 'nb_ram': '64', 'monthly_cost': '995.9', 'cost': '1.933', 'region': 'US West', 'os': 'windows', 'provider': 'alicloud'}

@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-N1-HIGHCPU-2', 'nb_cpu': '2', 'nb_ram': '1.8', 'cost': 0.0912, 'provider': 'googlecloud', 'region': 'europe-west2'}

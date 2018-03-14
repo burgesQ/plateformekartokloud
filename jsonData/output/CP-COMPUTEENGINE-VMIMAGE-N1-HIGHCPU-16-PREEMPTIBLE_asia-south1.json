@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-N1-HIGHCPU-16-PREEMPTIBLE', 'nb_cpu': '16', 'nb_ram': '14.40', 'cost': 0.14337, 'provider': 'googlecloud', 'region': 'asia-south1'}

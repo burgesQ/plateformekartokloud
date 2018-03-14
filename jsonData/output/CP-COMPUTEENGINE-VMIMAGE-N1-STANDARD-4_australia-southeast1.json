@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-N1-STANDARD-4', 'nb_cpu': '4', 'nb_ram': '15', 'cost': 0.2697, 'provider': 'googlecloud', 'region': 'australia-southeast1'}

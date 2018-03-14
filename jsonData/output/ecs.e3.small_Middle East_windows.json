@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'ecs.e3.small', 'nb_cpu': '1', 'nb_ram': '8', 'monthly_cost': '90', 'cost': '0.163', 'region': 'Middle East', 'os': 'windows', 'provider': 'alicloud'}

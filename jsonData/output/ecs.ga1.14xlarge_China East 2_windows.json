@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'ecs.ga1.14xlarge', 'nb_cpu': '56', 'nb_ram': '160', 'monthly_cost': '1474.92', 'cost': '5.122', 'region': 'China East 2', 'os': 'windows', 'provider': 'alicloud'}

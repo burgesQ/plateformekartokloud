@@ -1,0 +1,1 @@
+{'type': 'VM', 'name': 'CP-COMPUTEENGINE-VMIMAGE-N1-HIGHMEM-4-PREEMPTIBLE', 'nb_cpu': '4', 'nb_ram': '26', 'cost': 0.07515, 'provider': 'googlecloud', 'region': 'southamerica-east1'}
