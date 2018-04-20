@@ -2,20 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Company;
-use App\Entity\DailyKartoVm;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use App\Helper\APIControllerHelper;
 use Swagger\Annotations as SWG;
 use App\Entity\KartoVm;
 use App\Entity\Map;
-use Symfony\Component\HttpFoundation\Response;
+use App\Entity\Company;
+use App\Entity\DailyKartoVm;
 
 class APIController extends APIControllerHelper
 {
+    private function checkUser() {
+        if ($this->getUser())
+            return true;
+        else
+            throw new AccessDeniedException("You need to be logged my man.");
+    }
+
     /**
      * @SWG\Response(
      *     response=201,
@@ -35,7 +42,6 @@ class APIController extends APIControllerHelper
      *     @SWG\Schema(type="string")
      * )
      *
-     * @Security("has_roles('ROLE_USER')")
      * @Rest\Post("/api/v1/map")
      *
      * @param Request $request
@@ -70,7 +76,6 @@ class APIController extends APIControllerHelper
      *     @SWG\Schema(type="string")
      * )
      *
-     * @Security("has_roles('ROLE_USER')")
      * @Rest\Put("/api/v1/map/{map_id}")
      *
      * @param Request $request
@@ -92,7 +97,7 @@ class APIController extends APIControllerHelper
      *     description="User not logged",
      *     @SWG\Schema(type="string")
      * )
-     * @Security("has_roles('ROLE_USER')")
+     *
      * @Rest\Get("/api/v1/karto_vm")
      */
     public function getKartoVmAction() {
@@ -114,7 +119,7 @@ class APIController extends APIControllerHelper
      *     description="User not logged",
      *     @SWG\Schema(type="string")
      * )
-     * @Security("has_roles('ROLE_USER')")
+     *
      * @Rest\Get("/api/v1/daily_karto_vm")
      */
     public function getDailyKartoVmAction() {
@@ -142,7 +147,6 @@ class APIController extends APIControllerHelper
      *     @SWG\Schema(type="string")
      * )
      *
-     * @Security("has_roles('ROLE_USER')")
      * @Rest\Get("/api/v1/comapny/{company_id}/maps")
      *
      * @param int $company_id
@@ -182,7 +186,6 @@ class APIController extends APIControllerHelper
      *     @SWG\Schema(type="string")
      * )
      * @TODO
-     * @Security("has_roles('ROLE_USER')")
      * @Rest\Get("/api/v1/map_info/{map_id}")
      *
      * @param string $map_id
