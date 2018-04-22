@@ -48,6 +48,8 @@ class Company
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="UserCompany", mappedBy="company")
+     * @JMS\Expose()
+     * @JMS\MaxDepth(2)
      */
     private $users;
 
@@ -55,7 +57,7 @@ class Company
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Map", mappedBy="company")
      * @JMS\Expose()
-     * @JMS\MaxDepth(1)
+     * @JMS\MaxDepth(2)
      */
     private $maps;
 

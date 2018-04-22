@@ -48,7 +48,7 @@ class Map
      *
      * @ORM\ManyToOne(targetEntity="Company", inversedBy="maps")
      * @JMS\Expose()
-     * @JMS\MaxDepth(1)
+     * @JMS\MaxDepth(2)
      */
     private $company;
 
@@ -57,7 +57,7 @@ class Map
      *
      * @ORM\OneToMany(targetEntity="KartoVmMap", mappedBy="map")
      * @JMS\Expose()
-     * @JMS\MaxDepth(3)
+     * @JMS\MaxDepth(2)
      */
     private $kartoVms;
 

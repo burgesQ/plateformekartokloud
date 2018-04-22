@@ -1,0 +1,11 @@
+easy_admin:
+    entities:
+        DailyKartoVm:
+            class: 'App\Entity\DailyKartoVm'
+            label: 'DailyKartoVms'
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'uniqueId' }
+                    - { property: 'creationDate' }
+                    - { property: 'updateDate' }

@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
- * Class USerCompany
+ * Class UserCompany
+ *
  * @package App\Entity
  *
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="user_company")
  * @ORM\HasLifecycleCallbacks()
  */

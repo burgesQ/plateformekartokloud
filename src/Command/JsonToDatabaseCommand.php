@@ -101,25 +101,22 @@ class JsonToDatabaseCommand extends Command
 
             $usableJson = $this->epur_json($file->getRealPath());
 
-            if (key_exists("cpu", $usableJson)) {
+            if (!($dailyKartoVm = $this->em->getRepository(DailyKartoVm::class)
+                                           ->findOneBy(["uniqueId" => $usableJson["name"]])))
+                $dailyKartoVm = new DailyKartoVm();
 
-                if (!($dailyKartoVm = $this->em->getRepository(DailyKartoVm::class)
-                                             ->findOneBy(["uniqueId" => $usableJson["name"]])))
-                    $dailyKartoVm = new DailyKartoVm();
+            $dailyKartoVm
+                ->setProvider($usableJson["provider"])
+                ->setRegion($usableJson["region"])
+                ->setCost($usableJson["cost"])
+                ->setRam($usableJson["nb_ram"])
+                ->setOs($usableJson["cost"])
+                ->setUniqueId($usableJson["name"])
+                ->setType($usableJson["type"])
+            ;
 
-                $dailyKartoVm
-                    ->setProvider($usableJson["provider"])
-                    ->setRegion($usableJson["region"])
-                    ->setCost($usableJson["cost"])
-                    ->setRam($usableJson["nb_ram"])
-                    ->setOs($usableJson["cost"])
-                    ->setUniqueId($usableJson["name"])
-                    ->setType($usableJson["type"])
-                ;
-
-                $this->em->persist($dailyKartoVm);
-            }
+            $this->em->persist($dailyKartoVm);
+            $this->em->flush();
         }
-        $this->em->flush();
     }
 }

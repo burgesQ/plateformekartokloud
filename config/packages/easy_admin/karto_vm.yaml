@@ -1,0 +1,11 @@
+easy_admin:
+    entities:
+        KartoVm:
+            class: 'App\Entity\KartoVm'
+            label: 'KartoVms'
+            list:
+                fields:
+                    - { property: 'id' }
+                    - { property: 'uniqueId' }
+                    - { property: 'creationDate' }
+                    - { property: 'updateDate' }

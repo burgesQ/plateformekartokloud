@@ -55,7 +55,7 @@ class DailyKartoVm
 
     /**
      * @var int
-     * @ORM\Column(name="cpu", type="integer", nullable=false)
+     * @ORM\Column(name="cpu", type="integer", nullable=true)
      * @JMS\Expose()
      */
     private $cpu;
