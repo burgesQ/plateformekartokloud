@@ -57,7 +57,7 @@ class Map
      *
      * @ORM\OneToMany(targetEntity="KartoVmMap", mappedBy="map")
      * @JMS\Expose()
-     * @JMS\MaxDepth(2)
+     * @JMS\MaxDepth(3)
      */
     private $kartoVms;
 

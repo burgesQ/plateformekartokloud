@@ -2,17 +2,19 @@
 
 namespace App\Controller;
 
-use FOS\RestBundle\Controller\Annotations as Rest;
+
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Helper\APIControllerHelper;
+use App\Service\KartoMapCreator;
 use Swagger\Annotations as SWG;
+use App\Entity\DailyKartoVm;
 use App\Entity\KartoVm;
 use App\Entity\Map;
-use App\Entity\Company;
-use App\Entity\DailyKartoVm;
 
 class APIController extends APIControllerHelper
 {
@@ -44,12 +46,30 @@ class APIController extends APIControllerHelper
      *
      * @Rest\Post("/api/v1/map")
      *
-     * @param Request $request
-     * @TODO
+     * @param Request                $request
+     * @param KartoMapCreator        $kartoMapCreator
+     * @param EntityManagerInterface $em
+     *
      * @return Response
      */
-    public function postMapAction(Request $request) {
-        return $this->createApiResponse(null, Response::HTTP_NOT_IMPLEMENTED);
+    public function postMapAction(Request $request, KartoMapCreator $kartoMapCreator, EntityManagerInterface $em) {
+        $this->checkUser();
+
+        $kvms = array();
+        foreach ($request->request as $oneKVm)
+            $kvms[] = $kartoMapCreator->createKartoVmMap($oneKVm);
+
+        $map = new Map();
+        foreach ($kvms as $oneKVm)
+            if ($oneKVm)
+                $map->addKartoVm($oneKVm);
+            else
+                return $this->createApiResponse("Invalide data in the json array", Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $em->persist($map);
+        $em->flush();
+
+        return $this->createApiResponse($map, Response::HTTP_OK);
     }
 
     /**
@@ -83,6 +103,7 @@ class APIController extends APIControllerHelper
      * @return Response
      */
     public function putMapAction(Request $request, $map_id) {
+        $this->checkUser();
         return $this->createApiResponse(null, Response::HTTP_NOT_IMPLEMENTED);
     }
 
@@ -101,6 +122,7 @@ class APIController extends APIControllerHelper
      * @Rest\Get("/api/v1/karto_vm")
      */
     public function getKartoVmAction() {
+        $this->checkUser();
         return $this->createApiResponse(
             $this->getDoctrine()
                  ->getRepository(KartoVm::class)
@@ -123,6 +145,7 @@ class APIController extends APIControllerHelper
      * @Rest\Get("/api/v1/daily_karto_vm")
      */
     public function getDailyKartoVmAction() {
+        $this->checkUser();
         return $this->createApiResponse(
             $this->getDoctrine()
                  ->getRepository(DailyKartoVm::class)
@@ -147,25 +170,23 @@ class APIController extends APIControllerHelper
      *     @SWG\Schema(type="string")
      * )
      *
-     * @Rest\Get("/api/v1/comapny/{company_id}/maps")
-     *
-     * @param int $company_id
+     * @Rest\Get("/api/v1/company/maps")
      *
      * @return Response
      */
-    public function getMapByCompanyAction(int $company_id) {
+    public function getMapByCompanyAction() {
+        $this->checkUser();
 
-        if (!($this->getDoctrine()->getRepository(Company::class)->findOneBy(["id" => $company_id]))
-            || $this->getUser()->getCompany()->getCompany()->getId() !== $company_id)
-        return $this->createApiResponse(
-            "No such company.",
-            Response::HTTP_NOT_FOUND
-        );
+        if ($this->getUser()->getCompany()->getCompany() == null)
+            return $this->createApiResponse(
+                "User not linked to a company.",
+                Response::HTTP_NOT_FOUND
+            );
 
         return $this->createApiResponse(
             $this->getDoctrine()
                  ->getRepository(Map::class)
-                 ->findAll()
+                 ->findBy(["company" => $this->getUser()->getCompany()->getId()])
         );
     }
 
@@ -185,7 +206,6 @@ class APIController extends APIControllerHelper
      *     description="Invalid map id or not in corresponding company",
      *     @SWG\Schema(type="string")
      * )
-     * @TODO
      * @Rest\Get("/api/v1/map_info/{map_id}")
      *
      * @param string $map_id
@@ -193,6 +213,12 @@ class APIController extends APIControllerHelper
      * @return Response
      */
     public function getInfoForMapAction(string $map_id) {
-        return $this->createApiResponse(null, Response::HTTP_NOT_IMPLEMENTED);
+        $this->checkUser();
+
+        return $this->createApiResponse(
+            $this->getDoctrine()
+                 ->getRepository(Map::class)
+                 ->findBy(["id" => $map_id])
+        );
     }
 }

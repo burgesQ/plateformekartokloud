@@ -90,7 +90,7 @@ class DailyKartoVm
 
     /**
      * @var string
-     * @ORM\Column(name="os", type="string", nullable=false)
+     * @ORM\Column(name="os", type="string", nullable=true)
      * @JMS\Expose()
      */
     private $os;

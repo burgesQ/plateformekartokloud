@@ -43,14 +43,14 @@ class KartoVmMap
      *
      * @ORM\ManyToOne(targetEntity="KartoVm", inversedBy="maps")
      * @JMS\Expose()
-     * @JMS\MaxDepth(1)
+     * @JMS\MaxDepth(2)
      */
     private $kartoVm;
 
     /**
      * @var Map
      * @ORM\ManyToOne(targetEntity="Map", inversedBy="kartoVms")
-     * @JMS\Expose("map")
+     * @JMS\Expose()
      * @JMS\MaxDepth(1)
      */
     private $map;
@@ -81,8 +81,6 @@ class KartoVmMap
         $this->updateDate   = new \Datetime();
         $this->x_pos        = $x_pos;
         $this->y_pos        = $y_pos;
-        $this->kartoVm      = new ArrayCollection();
-        $this->map          = new ArrayCollection();
     }
 
     /**
@@ -161,6 +159,7 @@ class KartoVmMap
     public function setKartoVm(KartoVm $kartoVm) : KartoVmMap
     {
         $this->kartoVm = $kartoVm;
+        $kartoVm->addMap($this);
 
         return $this;
     }

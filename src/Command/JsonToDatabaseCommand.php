@@ -110,7 +110,6 @@ class JsonToDatabaseCommand extends Command
                 ->setRegion($usableJson["region"])
                 ->setCost($usableJson["cost"])
                 ->setRam($usableJson["nb_ram"])
-                ->setOs($usableJson["cost"])
                 ->setUniqueId($usableJson["name"])
                 ->setType($usableJson["type"])
             ;
