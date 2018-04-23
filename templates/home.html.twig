@@ -15,22 +15,50 @@
 
     <script type="text/javascript">
 
-
         function pageLoader(route, arrayOptions) {
-
             $.ajax({
                 url: route,
                 method: "get",
                 data: arrayOptions
             }).done(function (msg) {
                 // console.log(msg);
-                $('#dynamic_content').val('');
-                $('#dynamic_content').html(msg);
+                $('#dynamic_content').val('').html(msg);
+            });
+        }
+
+        function stuffsFromAPI(route, verb, arrayOptions) {
+            $.ajax({
+                url: route,
+                type: verb,
+                data: arrayOptions
+            }).done(function (msg) {
+               console.log(msg);
             });
         }
 
         $(document).ready(function() {
             pageLoader('{{ path('app_view_byclass', { 'component' : 'map'}) }}', {});
+
+            // // get the karto vm
+            stuffsFromAPI('{{ path('app_api_getkartovm') }}', "GET", {});
+
+            // post a karto map
+            stuffsFromAPI('{{ path('app_api_postmap') }}', "POST",
+                    [
+                        {
+                            "karto_vm_id": 1,
+                            "x_pos": 5,
+                            "y_pos": 6
+                        },
+                        {
+                            "karto_vm_id": 1,
+                            "x_pos": 5,
+                            "y_pos": 6
+                        }
+                    ]
+            );
+
+            // get
         })
 
     </script>
