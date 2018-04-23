@@ -171,7 +171,7 @@ class Map
     public function addKartoVm(KartoVmMap $kartoVm) : Map
     {
         $this->kartoVms[] = $kartoVm;
-
+        $kartoVm->setMap($this);
         return $this;
     }
 

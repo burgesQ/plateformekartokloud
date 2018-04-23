@@ -5,6 +5,7 @@
     {% set user = app.user %}
 
     <div id="dynamic_content">
+        {{ include('api/map.html.twig') }}
     </div>
 
 {% endblock %}
@@ -30,35 +31,48 @@
             $.ajax({
                 url: route,
                 type: verb,
-                data: arrayOptions
+                data: JSON.stringify(arrayOptions)
             }).done(function (msg) {
                console.log(msg);
             });
         }
 
         $(document).ready(function() {
-            pageLoader('{{ path('app_view_byclass', { 'component' : 'map'}) }}', {});
+//            pageLoader('{{ path('app_view_byclass', { 'component' : 'map'}) }}', {});
 
-            // // get the karto vm
-            stuffsFromAPI('{{ path('app_api_getkartovm') }}', "GET", {});
+            // get the karto vm
+            {#stuffsFromAPI('{{ path('app_api_getkartovm') }}', "GET", {});#}
 
             // post a karto map
-            stuffsFromAPI('{{ path('app_api_postmap') }}', "POST",
-                    [
-                        {
-                            "karto_vm_id": 1,
-                            "x_pos": 5,
-                            "y_pos": 6
-                        },
-                        {
-                            "karto_vm_id": 1,
-                            "x_pos": 5,
-                            "y_pos": 6
-                        }
-                    ]
-            );
+            {#stuffsFromAPI('{{ path('app_api_postmap') }}', "POST",#}
+                    {#[#}
+                        {#{#}
+                            {#"karto_vm_id": 1,#}
+                            {#"x_pos": 5,#}
+                            {#"y_pos": 6#}
+                        {#},#}
+                        {#{#}
+                            {#"karto_vm_id": 1,#}
+                            {#"x_pos": 5,#}
+                            {#"y_pos": 6#}
+                        {#}#}
+                    {#]#}
+            {#);#}
 
-            // get
+            // put a karto map
+            {#stuffsFromAPI('{{ path('app_api_putmap', { 'map_id' : 1 }) }}', "PUT",#}
+                    {#[#}
+                        {#{#}
+                            {#"karto_vm_id": 1,#}
+                            {#"x_pos": 5,#}
+                            {#"y_pos": 6#}
+                        {#}#}
+                    {#]#}
+            {#);#}
+
+            // get a karto map
+            // stuffsFromAPI('{{ path('app_api_getmapbyid', { 'map_id' : 1 }) }}', "GET", {});
+
         })
 
     </script>

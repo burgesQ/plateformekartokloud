@@ -3,28 +3,24 @@
 namespace App\Controller;
 
 
-use Symfony\Component\Finder\Exception\AccessDeniedException;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Helper\APIControllerHelper;
-use App\Service\KartoMapCreator;
-use Swagger\Annotations as SWG;
 use App\Entity\DailyKartoVm;
 use App\Entity\KartoVm;
+use App\Entity\KartoVmMap;
 use App\Entity\Map;
+use App\Entity\User;
+use App\Helper\APIControllerHelper;
+use App\Service\KartoMapCreator;
+use Doctrine\ORM\EntityManagerInterface;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class APIController extends APIControllerHelper
 {
-    private function checkUser() {
-        if ($this->getUser())
-            return true;
-        else
-            throw new AccessDeniedException("You need to be logged my man.");
-    }
-
     /**
      * @SWG\Response(
      *     response=201,
@@ -52,24 +48,77 @@ class APIController extends APIControllerHelper
      *
      * @return Response
      */
-    public function postMapAction(Request $request, KartoMapCreator $kartoMapCreator, EntityManagerInterface $em) {
-        $this->checkUser();
+    public function postMapAction(Request $request, KartoMapCreator $kartoMapCreator, EntityManagerInterface $em)
+    {
+        /** @var User $user */
+        $user = $this->checkUser();
 
-        $kvms = array();
-        foreach ($request->request as $oneKVm)
+        if ($user->getCompany() == null) {
+            throw new NotFoundHttpException("You need to join a company my man");
+        }
+
+        // de-serialize json
+        $kvms = [];
+        foreach ($request->request as $oneKVm) {
             $kvms[] = $kartoMapCreator->createKartoVmMap($oneKVm);
+        }
 
+        // create map entity
         $map = new Map();
-        foreach ($kvms as $oneKVm)
-            if ($oneKVm)
+        $map->setCompany($user->getCompany()->getCompany());
+        foreach ($kvms as $oneKVm) {
+            if ($oneKVm) {
                 $map->addKartoVm($oneKVm);
-            else
-                return $this->createApiResponse("Invalide data in the json array", Response::HTTP_UNPROCESSABLE_ENTITY);
+            } else {
+                return $this->createApiResponse("Invalid data in the json array", Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+        }
 
         $em->persist($map);
         $em->flush();
 
         return $this->createApiResponse($map, Response::HTTP_OK);
+    }
+
+    /**
+     * @return User|null
+     */
+    private function checkUser() : ?User
+    {
+        if ($this->getUser()) {
+            return $this->getUser();
+        } else {
+            throw new AccessDeniedException("You need to be logged my man.");
+        }
+    }
+
+    /**
+     * @SWG\Response(
+     *     response=204,
+     *     description="Returns the array of kvm"
+     * )
+     * @SWG\Response(
+     *     response=403,
+     *     description="User not logged",
+     *     @SWG\Schema(type="string")
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Invalid map id",
+     *     @SWG\Schema(type="string")
+     * )
+     *
+     * @Rest\Put("/api/v1/kvm/{map_id}")
+     *
+     * @param int                    $map_id
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     */
+    public function getKVMforMapAction($map_id, EntityManagerInterface $em)
+    {
+        return $this->createApiResponse($em->getRepository(KartoVmMap::class)->findBy(["map_id" => $map_id])
+            , Response::HTTP_OK);
     }
 
     /**
@@ -98,13 +147,72 @@ class APIController extends APIControllerHelper
      *
      * @Rest\Put("/api/v1/map/{map_id}")
      *
-     * @param Request $request
-     * @TODO
+     * @param Request                $request
+     * @param int                    $map_id
+     * @param EntityManagerInterface $em
+     *
      * @return Response
      */
-    public function putMapAction(Request $request, $map_id) {
+    public function putMapAction(Request $request, int $map_id, EntityManagerInterface $em)
+    {
         $this->checkUser();
-        return $this->createApiResponse(null, Response::HTTP_NOT_IMPLEMENTED);
+
+        if (!($map = $em->getRepository(Map::class)->findOneBy(["id" => $map_id]))) {
+            return $this->createApiResponse("No such map entity", Response::HTTP_NOT_FOUND);
+        }
+
+        // update pos kvm
+        $arrayId = [];
+        foreach ($request->request as $oneKVm) {
+            if (!($kvm = $em->getRepository(KartoVmMap::class)->findOneBy(["id" => $oneKVm["karto_vm_id"]]))) {
+                return $this->createApiResponse("No such karto vm map entity", Response::HTTP_NOT_FOUND);
+            }
+
+            $kvm->setXPos($oneKVm["x_pos"]);
+            $kvm->setYPos($oneKVm["y_pos"]);
+            $arrayId[] = $kvm->getId();
+        }
+
+        // remove kvm
+        /** @var KartoVmMap $oneKVm */
+        foreach ($map->getKartoVms() as $oneKVm) {
+            if (!in_array($oneKVm->getId(), $arrayId)) {
+                $map->removeKartoVm($oneKVm);
+                $em->remove($oneKVm);
+            }
+        }
+
+        $em->flush();
+
+        return $this->createApiResponse(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return a karto map",
+     *     @Model(type=Map::class)
+     * )
+     * @SWG\Response(
+     *     response=403,
+     *     description="User not logged",
+     *     @SWG\Schema(type="string")
+     * )
+     *
+     * @Rest\Get("/api/v1/map/{map_id}")
+     * @param int $map_id
+     *
+     * @return Response
+     */
+    public function getMapByIdAction(int $map_id)
+    {
+        $this->checkUser();
+
+        return $this->createApiResponse(
+            $this->getDoctrine()
+                 ->getRepository(Map::class)
+                 ->findOneBy(["id" => $map_id])
+        );
     }
 
     /**
@@ -121,8 +229,10 @@ class APIController extends APIControllerHelper
      *
      * @Rest\Get("/api/v1/karto_vm")
      */
-    public function getKartoVmAction() {
+    public function getKartoVmAction()
+    {
         $this->checkUser();
+
         return $this->createApiResponse(
             $this->getDoctrine()
                  ->getRepository(KartoVm::class)
@@ -144,8 +254,10 @@ class APIController extends APIControllerHelper
      *
      * @Rest\Get("/api/v1/daily_karto_vm")
      */
-    public function getDailyKartoVmAction() {
+    public function getDailyKartoVmAction()
+    {
         $this->checkUser();
+
         return $this->createApiResponse(
             $this->getDoctrine()
                  ->getRepository(DailyKartoVm::class)
@@ -174,14 +286,16 @@ class APIController extends APIControllerHelper
      *
      * @return Response
      */
-    public function getMapByCompanyAction() {
+    public function getMapByCompanyAction()
+    {
         $this->checkUser();
 
-        if ($this->getUser()->getCompany()->getCompany() == null)
+        if ($this->getUser()->getCompany()->getCompany() == null) {
             return $this->createApiResponse(
                 "User not linked to a company.",
                 Response::HTTP_NOT_FOUND
             );
+        }
 
         return $this->createApiResponse(
             $this->getDoctrine()
@@ -190,35 +304,35 @@ class APIController extends APIControllerHelper
         );
     }
 
-    /**
-     * @TODO add Entity Model
-     * @SWG\Response(
-     *     response=200,
-     *     description="Return the map info"
-     * )
-     * @SWG\Response(
-     *     response=403,
-     *     description="User not logged",
-     *     @SWG\Schema(type="string")
-     * )
-     * @SWG\Response(
-     *     response=404,
-     *     description="Invalid map id or not in corresponding company",
-     *     @SWG\Schema(type="string")
-     * )
-     * @Rest\Get("/api/v1/map_info/{map_id}")
-     *
-     * @param string $map_id
-     *
-     * @return Response
-     */
-    public function getInfoForMapAction(string $map_id) {
-        $this->checkUser();
-
-        return $this->createApiResponse(
-            $this->getDoctrine()
-                 ->getRepository(Map::class)
-                 ->findBy(["id" => $map_id])
-        );
-    }
+//    /**
+//     * @TODO add Entity Model
+//     * @SWG\Response(
+//     *     response=200,
+//     *     description="Return the map info"
+//     * )
+//     * @SWG\Response(
+//     *     response=403,
+//     *     description="User not logged",
+//     *     @SWG\Schema(type="string")
+//     * )
+//     * @SWG\Response(
+//     *     response=404,
+//     *     description="Invalid map id or not in corresponding company",
+//     *     @SWG\Schema(type="string")
+//     * )
+//     * @Rest\Get("/api/v1/map_info/{map_id}")
+//     *
+//     * @param string $map_id
+//     *
+//     * @return Response
+//     */
+//    public function getInfoForMapAction(string $map_id) {
+//        $this->checkUser();
+//
+//        return $this->createApiResponse(
+//            $this->getDoctrine()
+//                 ->getRepository(Map::class)
+//                 ->findBy(["id" => $map_id])
+//        );
+//    }
 }
