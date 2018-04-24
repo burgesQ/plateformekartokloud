@@ -31,7 +31,7 @@
             $.ajax({
                 url: route,
                 type: verb,
-                data: JSON.stringify(arrayOptions)
+                data: arrayOptions !== null ? JSON.stringify(arrayOptions) : null
             }).done(function (msg) {
                console.log(msg);
             });
@@ -41,7 +41,7 @@
 //            pageLoader('{{ path('app_view_byclass', { 'component' : 'map'}) }}', {});
 
             // get the karto vm
-            {#stuffsFromAPI('{{ path('app_api_getkartovm') }}', "GET", {});#}
+            stuffsFromAPI('{{ path('app_api_getkartovm') }}', "GET", null);
 
             // post a karto map
             {#stuffsFromAPI('{{ path('app_api_postmap') }}', "POST",#}
@@ -73,7 +73,8 @@
             // get a karto map
             // stuffsFromAPI('{{ path('app_api_getmapbyid', { 'map_id' : 1 }) }}', "GET", {});
 
-        })
+        });
+        
 
     </script>
 

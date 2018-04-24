@@ -22,6 +22,22 @@ class LoadKartoVmFixture extends AbstractFixture implements OrderedFixtureInterf
             "region"   => "europe"
         ],
         [
+            "uniqueId" => "small_azure",
+            "provider" => "Microsoft Azure",
+            "cpu"      => "2",
+            "ram"      => "2048",
+            "cost"     => "0,006",
+            "region"   => "europe"
+        ],
+        [
+            "uniqueId" => "small_azure",
+            "provider" => "Microsoft Azure",
+            "cpu"      => "3",
+            "ram"      => "2048",
+            "cost"     => "0,006",
+            "region"   => "europe"
+        ],
+        [
             "uniqueId" => "medium_aws",
             "provider" => "Amazone Web Server",
             "cpu"      => "3",
