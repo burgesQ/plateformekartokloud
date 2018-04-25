@@ -62,6 +62,22 @@ class Map
     private $kartoVms;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="size_x", type="integer")
+     * @JMS\Expose()
+     */
+    private $sizeX;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="size_y", type="integer")
+     * @JMS\Expose()
+     */
+    private $sizeY;
+
+    /**
      * Company constructor.
      */
     public function __construct()
@@ -185,6 +201,54 @@ class Map
     public function removeKartoVm(KartoVmMap $kartoVm) : Map
     {
         $this->kartoVms->remove($kartoVm);
+
+        return $this;
+    }
+
+    /**
+     * Get SizeX
+     *
+     * @return int
+     */
+    public function getSizeX() : int
+    {
+        return $this->sizeX;
+    }
+
+    /**
+     * Set SizeX
+     *
+     * @param int $sizeX
+     *
+     * @return Map
+     */
+    public function setSizeX(int $sizeX) : Map
+    {
+        $this->sizeX = $sizeX;
+
+        return $this;
+    }
+
+    /**
+     * Get SizeY
+     *
+     * @return int
+     */
+    public function getSizeY() : int
+    {
+        return $this->sizeY;
+    }
+
+    /**
+     * Set SizeY
+     *
+     * @param int $sizeY
+     *
+     * @return Map
+     */
+    public function setSizeY(int $sizeY) : Map
+    {
+        $this->sizeY = $sizeY;
 
         return $this;
     }

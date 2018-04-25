@@ -15,6 +15,21 @@ class DailyKartoVmRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function getProviderInDatabase()
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->select("DISTINCT(dkv.provider)")
+            ->from('App:DailyKartoVm','dkv')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * @param string $size
      * @param string $provider
      * @param string $type
@@ -23,7 +38,7 @@ class DailyKartoVmRepository extends ServiceEntityRepository
      * @return mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findArevageBySizeAndProvider(string $size, string $provider, string $type, string $field)
+    public function findAverageBySizeAndProvider(string $size, string $provider, string $type, string $field)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 

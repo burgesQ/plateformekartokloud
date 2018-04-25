@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\DailyKartoVm;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -68,9 +69,7 @@ class JsonToDatabaseCommand extends Command
     {
         $this
             ->setDescription('Scrap the json to update the data in db.')
-            // specific dlInterface Tags
-            // specific users
-            // specific base directory
+            ->addArgument("path", InputArgument::OPTIONAL, 'Relative path to source the scrapping')
         ;
     }
 
@@ -85,14 +84,17 @@ class JsonToDatabaseCommand extends Command
         InputInterface $input,
         OutputInterface $output
     ) : void {
-        $io            = new SymfonyStyle($input, $output);
-        $tot           = 0;
-        $error         = 0;
-        $finder        = new Finder();
+        $io     = new SymfonyStyle($input, $output);
+        $tot    = 0;
+        $error  = 0;
+        $finder = new Finder();
+
+        $path = $input->getArgument("path");
+        $path = ($path ? $path : $this->path);
 
         // get path to scrap
-        $finder->files()->in($this->path);
-        $io->section("Let check the {$this->path} directory");
+        $finder->files()->in($path);
+        $io->section("Let check the {$path} directory");
         $io->progressStart(count($finder));
 
         foreach ($finder as $file) {
@@ -143,6 +145,7 @@ class JsonToDatabaseCommand extends Command
         return (
             array_key_exists("size", $arrayToTest)
             && array_key_exists("nb_ram", $arrayToTest)
+            && array_key_exists("cost", $arrayToTest)
             && array_key_exists("nb_cpu", $arrayToTest)
         );
     }
