@@ -2,20 +2,19 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\PersistentCollection;
-use JMS\Serializer\Annotation as JMS;
+
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class KartoVM
  *
  * @package App\Entity
  *
- * @ORM\Entity
- * @ORM\Table(name="daily_karto_vm")
  * @JMS\ExclusionPolicy("all")
+ * @ORM\Entity(repositoryClass="App\Repository\DailyKartoVmRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\Table(name="daily_karto_vm")
  */
 class DailyKartoVm
 {
@@ -94,6 +93,13 @@ class DailyKartoVm
      * @JMS\Expose()
      */
     private $os;
+
+    /**
+     * @var string
+     * @ORM\Column(name="size", type="string", nullable=true)
+     * @JMS\Expose()
+     */
+    private $size;
 
     /**
      * Company constructor.
@@ -348,6 +354,30 @@ class DailyKartoVm
     public function setOs(string $os) : DailyKartoVm
     {
         $this->os = $os;
+
+        return $this;
+    }
+
+    /**
+     * Get Size
+     *
+     * @return string
+     */
+    public function getSize() : string
+    {
+        return $this->size;
+    }
+
+    /**
+     * Set Size
+     *
+     * @param string $size
+     *
+     * @return DailyKartoVm
+     */
+    public function setSize(string $size) : DailyKartoVm
+    {
+        $this->size = $size;
 
         return $this;
     }

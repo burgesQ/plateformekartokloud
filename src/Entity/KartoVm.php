@@ -76,10 +76,17 @@ class KartoVm
 
     /**
      * @var string
-     * @ORM\Column(name="region", type="string", nullable=false)
+     * @ORM\Column(name="size", type="string", nullable=false)
      * @JMS\Expose()
      */
-    private $region;
+    private $size;
+
+    /**
+     * @var string
+     * @ORM\Column(name="type", type="string", nullable=false)
+     * @JMS\Expose()
+     */
+    private $type;
 
     /**
      * @var ArrayCollection
@@ -274,25 +281,49 @@ class KartoVm
     }
 
     /**
-     * Get Region
+     * Get Size
      *
      * @return string
      */
-    public function getRegion() : string
+    public function getSize() : string
     {
-        return $this->region;
+        return $this->size;
     }
 
     /**
-     * Set Region
+     * Set Size
      *
-     * @param string $region
+     * @param string $size
      *
      * @return KartoVm
      */
-    public function setRegion(string $region) : KartoVm
+    public function setSize(string $size) : KartoVm
     {
-        $this->region = $region;
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * Get Type
+     *
+     * @return string
+     */
+    public function getType() : string
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set Type
+     *
+     * @param string $type
+     *
+     * @return KartoVm
+     */
+    public function setType(string $type) : KartoVm
+    {
+        $this->type = $type;
 
         return $this;
     }
