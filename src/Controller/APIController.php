@@ -30,13 +30,13 @@ class APIController extends APIControllerHelper
      *     )
      * )
      * @SWG\Response(
-     *     response=403,
-     *     description="User not logged",
+     *     response=401,
+     *     description="User need to join a company.",
      *     @SWG\Schema(type="string")
      * )
      * @SWG\Response(
-     *     response=501,
-     *     description="Not implemented",
+     *     response=403,
+     *     description="User not logged",
      *     @SWG\Schema(type="string")
      * )
      *
@@ -54,7 +54,7 @@ class APIController extends APIControllerHelper
         $user = $this->checkUser();
 
         if ($user->getCompany() == null) {
-            throw new NotFoundHttpException("You need to join a company my man");
+            return $this->createApiResponse("You need to join a company my man", Response::HTTP_UNAUTHORIZED);
         }
 
         // de-serialize json
@@ -268,7 +268,7 @@ class APIController extends APIControllerHelper
     /**
      * @SWG\Response(
      *     response=200,
-     *     description="Return the list of map peer company",
+     *     description="Return a list of map for the company of the logged user.",
      *     @Model(type=KartoVm::class)
      * )
      * @SWG\Response(
