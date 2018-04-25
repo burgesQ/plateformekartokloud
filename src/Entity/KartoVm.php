@@ -55,21 +55,21 @@ class KartoVm
 
     /**
      * @var float
-     * @ORM\Column(name="cpu", type="float")
+     * @ORM\Column(name="cpu", type="float", nullable=true)
      * @JMS\Expose()
      */
     private $cpu;
 
     /**
      * @var int
-     * @ORM\Column(name="ram", type="bigint")
+     * @ORM\Column(name="ram", type="bigint", nullable=true)
      * @JMS\Expose()
      */
     private $ram;
 
     /**
      * @var float
-     * @ORM\Column(name="cost", type="float")
+     * @ORM\Column(name="cost", type="float", nullable=true)
      * @JMS\Expose()
      */
     private $cost;
