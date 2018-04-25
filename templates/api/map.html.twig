@@ -1,14 +1,167 @@
 {% block body %}
-    {#<script>#}
-      {#var gameInstance = UnityLoader.instantiate("gameContainer", "unity/Build/Build.json", {onProgress: UnityProgress});#}
-    {#</script>#}
-    {##}
-    {#<div class="webgl-content">#}
-      {#<div id="gameContainer" style="width: 960px; height: 600px"></div>#}
-      {#<div class="footer">#}
-        {#<div class="webgl-logo"></div>#}
-        {#<div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>#}
-        {#<div class="title">Prototype</div>#}
-      {#</div>#}
-    {#</div>#}
+    <style>
+      .btn {
+        border-radius: 0;
+      }
+      .dropdown-menu {
+        right: 0;
+      }
+    </style>
+    <script>
+      var pool = [];
+      var savePool = [];
+      {% for kartoitem in kartovm %}
+        pool.push({
+            provider: '{{kartoitem.provider}}',
+            ram: {{kartoitem.ram}},
+            cost: {{kartoitem.cost}},
+            cpu: {{kartoitem.cpu}},
+            uniqueId: '{{kartoitem.uniqueId}}',
+            region: '{{kartoitem.region}}'
+        });
+        savePool = pool;
+      {% endfor %}
+
+      function setMachineTable() {
+        var newTable = '<table class="table" id="kartoTable"><thead class="thead-dark"><tr><th scope="col">Provider</th><th scope="col">CPU</th><th scope="col">RAM</th><th scope="col">Region</th></tr></thead><tbody>';
+        for (var i = 0; i < pool.length; i++) {
+          newTable += '<tr><th scope="row">' + pool[i].provider + '</th>';
+          newTable += '<td>' + pool[i].cpu + '</td>';
+          newTable += '<td>' + pool[i].ram + '</td>';
+          newTable += '<td>' + pool[i].region + '</td>';
+          newTable += '</tr>';
+        }
+        newTable += '</tbody></table>'
+        document.getElementById('kartoTable').innerHTML = newTable;
+      };
+
+      function resetFilter() {
+        pool = savePool;
+        setMachineTable();
+      };
+
+      function filter(data) {
+        var newPool = [];
+        for (var i = 0; i < pool.length; i++) {
+          if (pool[i].cpu == data || pool[i].ram == data || pool[i].cost == data ||
+              pool[i].provider.toLowerCase() == data.toLowerCase() ||
+              pool[i].region.toLowerCase() == data.toLowerCase()) {
+                newPool.push(pool[i]);
+          }
+        }
+        pool = newPool;
+        setMachineTable();
+      };
+
+    </script>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="blackground-color:#7386D5;width:100%;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Providers
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for kartoitem in kartovm %}
+              <a class="dropdown-item" href="#" id="kartoProvider_{{loop.index}}" onclick="javascript:filter('{{kartoitem.provider}}')">{{kartoitem.provider}}</a>
+              <li><a href="#"></a></li>
+            {% endfor %}
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="blackground-color:#7386D5;width:100%;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Id
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for kartoitem in kartovm %}
+              <a class="dropdown-item" href="#" id="kartoProvider_{{loop.index}}" onclick="javascript:filter('{{kartoitem.uniqueId}}')">{{kartoitem.uniqueId}}</a>
+              <li><a href="#"></a></li>
+            {% endfor %}
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="blackground-color:#7386D5;width:100%;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        CPU
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for kartoitem in kartovm %}
+              <a class="dropdown-item" href="#" id="kartoProvider_{{loop.index}}" onclick="javascript:filter('{{kartoitem.cpu}}')">{{kartoitem.cpu}}</a>
+              <li><a href="#"></a></li>
+            {% endfor %}
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="blackground-color:#7386D5;width:100%;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        RAM
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for kartoitem in kartovm %}
+              <a class="dropdown-item" href="#" id="kartoProvider_{{loop.index}}" onclick="javascript:filter('{{kartoitem.ram}}')">{{kartoitem.ram}}</a>
+              <li><a href="#"></a></li>
+            {% endfor %}
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="blackground-color:#7386D5;width:100%;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Cost
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for kartoitem in kartovm %}
+              <a class="dropdown-item" href="#" id="kartoProvider_{{loop.index}}" onclick="javascript:filter('{{kartoitem.cost}}')">{{kartoitem.cost}}</a>
+              <li><a href="#"></a></li>
+            {% endfor %}
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" style="blackground-color:#7386D5;width:100%;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Region
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for kartoitem in kartovm %}
+              <a class="dropdown-item" href="#" id="kartoProvider_{{loop.index}}" onclick="javascript:filter('{{kartoitem.region}}')">{{kartoitem.region}}</a>
+              <li><a href="#"></a></li>
+            {% endfor %}
+        </div>
+      </div>
+      <button class="btn btn-secondary" type="button" style="blackground-color:#7386D5;width:100%;" onclick="javascript:resetFilter()">
+        <a href="#" onclick="javascript:resetFilter()">Clear filters</a>
+      </button>
+      <table class="table" id="kartoTable">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Provider</th>
+            <th scope="col">CPU</th>
+            <th scope="col">RAM</th>
+            <th scope="col">Region</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for kartoitem in kartovm %}
+          <tr>
+            <th scope="row">{{kartoitem.provider}}</th>
+            <td>{{kartoitem.cpu}}</td>
+            <td>{{kartoitem.ram}}</td>
+            <td>{{kartoitem.region}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+  </div>
+    <script>
+      var gameInstance = UnityLoader.instantiate("gameContainer", "unity/Build/Build.json", {onProgress: UnityProgress});
+    </script>
+    <div class="webgl-content" style="left:55%;">
+      <div id="gameContainer" style="margin: 0px; width: 750px; height: 600px; padding: 0px; border: 0px; position: relative; background: rgb(35, 31, 32);"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
+        <div class="title">Prototype</div>
+      </div>
+    </div>
+
 {% endblock %}
