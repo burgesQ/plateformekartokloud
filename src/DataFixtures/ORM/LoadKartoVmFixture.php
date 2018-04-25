@@ -14,6 +14,8 @@ class LoadKartoVmFixture extends AbstractFixture implements OrderedFixtureInterf
      */
     private $arrayKartoVm = [
         [
+            "type" => "db",
+            "size" => "small",
             "uniqueId" => "small_azure",
             "provider" => "Microsoft Azure",
             "cpu"      => "1.5",
@@ -22,6 +24,8 @@ class LoadKartoVmFixture extends AbstractFixture implements OrderedFixtureInterf
             "region"   => "europe"
         ],
         [
+            "size" => "medium",
+            "type" => "db",
             "uniqueId" => "small_azure",
             "provider" => "Microsoft Azure",
             "cpu"      => "2",
@@ -30,6 +34,8 @@ class LoadKartoVmFixture extends AbstractFixture implements OrderedFixtureInterf
             "region"   => "europe"
         ],
         [
+            "size" => "big",
+            "type" => "vm",
             "uniqueId" => "small_azure",
             "provider" => "Microsoft Azure",
             "cpu"      => "3",
@@ -38,6 +44,8 @@ class LoadKartoVmFixture extends AbstractFixture implements OrderedFixtureInterf
             "region"   => "europe"
         ],
         [
+            "size" => "small",
+            "type" => "db",
             "uniqueId" => "medium_aws",
             "provider" => "Amazone Web Server",
             "cpu"      => "3",
@@ -46,6 +54,8 @@ class LoadKartoVmFixture extends AbstractFixture implements OrderedFixtureInterf
             "region"   => "north_america"
         ],
         [
+            "size" => "medium",
+            "type" => "vm",
             "uniqueId" => "large_gpc",
             "provider" => "Google Cloud Platform",
             "cpu"      => "4.5",
