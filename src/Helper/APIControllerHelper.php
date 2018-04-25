@@ -2,12 +2,12 @@
 
 namespace App\Helper;
 
-use JMS\Serializer\SerializationContext;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use FOS\RestBundle\Controller\FOSRestController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class APIControllerHelper extends FOSRestController
 {
@@ -19,8 +19,9 @@ class APIControllerHelper extends FOSRestController
     {
         $data = json_decode($request->getContent(), true);
 
-        if ($data === null)
+        if ($data === null) {
             throw new BadRequestHttpException();
+        }
 
         $clearMissing = $request->getMethod() != 'PATCH';
 
@@ -28,15 +29,16 @@ class APIControllerHelper extends FOSRestController
     }
 
     /**
-     * @param string|array    $data
-     * @param int $statusCode
+     * @param string|array $data
+     * @param int          $statusCode
      *
      * @return Response
      */
     protected function createApiResponse($data, $statusCode = Response::HTTP_OK)
     {
-        if ("string" == gettype($data))
-            $data = [ "message" => $data ];
+        if ("string" == gettype($data)) {
+            $data = ["message" => $data];
+        }
 
         $json = $this->serialize($data);
 
@@ -51,11 +53,13 @@ class APIControllerHelper extends FOSRestController
      *
      * @return mixed|string
      */
-    protected function serialize($data, $format = 'json') {
+    protected function serialize($data, $format = 'json')
+    {
         return $this->container
             ->get('jms_serializer')
             ->serialize($data, $format,
-                        SerializationContext::create()->enableMaxDepthChecks()
-            );
+                SerializationContext::create()->enableMaxDepthChecks()
+            )
+            ;
     }
 }

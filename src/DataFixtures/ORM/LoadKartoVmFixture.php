@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\KartoVm;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadKartoVmFixture extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -61,22 +61,17 @@ class LoadKartoVmFixture extends AbstractFixture implements OrderedFixtureInterf
     public function load(ObjectManager $manager)
     {
         foreach ($this->arrayKartoVm as $oneVm) {
-            $kartoVm =  new KartoVm();
-
-            try {
-                $kartoVm
-                    ->setUniqueId($oneVm["uniqueId"])
-                    ->setProvider($oneVm["provider"])
-                    ->setCpu((float)$oneVm["cpu"])
-                    ->setRam((int)$oneVm["ram"])
-                    ->setCost((float)$oneVm["cost"])
-                    ->setRegion($oneVm["region"])
-                ;
-
-                $manager->persist($kartoVm);
-            } catch (\Error $e) {
-                echo $e->getTraceAsString();
-            }
+            $kartoVm = new KartoVm();
+            $kartoVm
+                ->setUniqueId($oneVm["uniqueId"])
+                ->setProvider($oneVm["provider"])
+                ->setCpu((float)$oneVm["cpu"])
+                ->setRam((int)$oneVm["ram"])
+                ->setCost((float)$oneVm["cost"])
+                ->setSize($oneVm["size"])
+                ->setType($oneVm["type"])
+            ;
+            $manager->persist($kartoVm);
         }
         $manager->flush();
     }
