@@ -13,56 +13,56 @@ class LoadKartoVmFixture extends AbstractFixture implements OrderedFixtureInterf
      * @var array
      */
     private $arrayKartoVm = [
-        [
-            "type" => "db",
-            "size" => "small",
-            "uniqueId" => "small_azure",
-            "provider" => "Microsoft Azure",
-            "cpu"      => "1.5",
-            "ram"      => "2048",
-            "cost"     => "0,006",
-            "region"   => "europe"
-        ],
-        [
-            "size" => "medium",
-            "type" => "db",
-            "uniqueId" => "small_azure",
-            "provider" => "Microsoft Azure",
-            "cpu"      => "2",
-            "ram"      => "2048",
-            "cost"     => "0,006",
-            "region"   => "europe"
-        ],
-        [
-            "size" => "big",
-            "type" => "vm",
-            "uniqueId" => "small_azure",
-            "provider" => "Microsoft Azure",
-            "cpu"      => "3",
-            "ram"      => "2048",
-            "cost"     => "0,006",
-            "region"   => "europe"
-        ],
-        [
-            "size" => "small",
-            "type" => "db",
-            "uniqueId" => "medium_aws",
-            "provider" => "Amazone Web Server",
-            "cpu"      => "3",
-            "ram"      => "4096",
-            "cost"     => "0,02",
-            "region"   => "north_america"
-        ],
-        [
-            "size" => "medium",
-            "type" => "vm",
-            "uniqueId" => "large_gpc",
-            "provider" => "Google Cloud Platform",
-            "cpu"      => "4.5",
-            "ram"      => "8182",
-            "cost"     => "0.20",
-            "region"   => "asia"
-        ]
+//        [
+//            "type" => "db",
+//            "size" => "small",
+//            "uniqueId" => "small_azure",
+//            "provider" => "Microsoft Azure",
+//            "cpu"      => "1.5",
+//            "ram"      => "2048",
+//            "cost"     => "0,006",
+//            "region"   => "europe"
+//        ],
+//        [
+//            "size" => "medium",
+//            "type" => "db",
+//            "uniqueId" => "small_azure",
+//            "provider" => "Microsoft Azure",
+//            "cpu"      => "2",
+//            "ram"      => "2048",
+//            "cost"     => "0,006",
+//            "region"   => "europe"
+//        ],
+//        [
+//            "size" => "big",
+//            "type" => "vm",
+//            "uniqueId" => "small_azure",
+//            "provider" => "Microsoft Azure",
+//            "cpu"      => "3",
+//            "ram"      => "2048",
+//            "cost"     => "0,006",
+//            "region"   => "europe"
+//        ],
+//        [
+//            "size" => "small",
+//            "type" => "db",
+//            "uniqueId" => "medium_aws",
+//            "provider" => "Amazone Web Server",
+//            "cpu"      => "3",
+//            "ram"      => "4096",
+//            "cost"     => "0,02",
+//            "region"   => "north_america"
+//        ],
+//        [
+//            "size" => "medium",
+//            "type" => "vm",
+//            "uniqueId" => "large_gpc",
+//            "provider" => "Google Cloud Platform",
+//            "cpu"      => "4.5",
+//            "ram"      => "8182",
+//            "cost"     => "0.20",
+//            "region"   => "asia"
+//        ]
     ];
 
     /**
