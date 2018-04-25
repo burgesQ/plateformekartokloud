@@ -48,38 +48,44 @@ class UpdateDatabaseVmCommand extends Command
         ;
     }
 
+
+
     /**
      * @param SymfonyStyle $io
      * @param string       $provider
      * @param string       $size
+     * @param string       $type
      *
      * @return int
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    private function syncBySize(SymfonyStyle $io, string $provider, string $size)
+    private function syncBySize(SymfonyStyle $io, string $provider, string $size, string $type) :int
     {
 
         $dailyKartoVmRepo = $this->em->getRepository(DailyKartoVm::class);
         $dailyKVm = $dailyKartoVmRepo->findBy([
             "provider" => $provider,
-            "size"     => $size
+            "size"     => $size,
+            "type"     => $type
         ]);
+
         $nbEntry = count($dailyKVm);
-        $io->section("Their is {$nbEntry} daily karto vm for the provider {$provider} ({$size} size).");
+        $io->section("Their is {$nbEntry} daily karto {$type} for the provider {$provider} ({$size} size).");
 
         if (!$nbEntry)
             return $nbEntry;
 
         // calc value kvm
-        $totCost = $dailyKartoVmRepo->findArevageBySizeAndProvider($size, $provider, "cost");
-        $totCpu  = $dailyKartoVmRepo->findArevageBySizeAndProvider($size, $provider, "cpu");
-        $totRam  = $dailyKartoVmRepo->findArevageBySizeAndProvider($size, $provider, "ram");
+        $totCost = $dailyKartoVmRepo->findArevageBySizeAndProvider($size, $provider, $type, "cost");
+        $totCpu  = $dailyKartoVmRepo->findArevageBySizeAndProvider($size, $provider, $type,"cpu");
+        $totRam  = $dailyKartoVmRepo->findArevageBySizeAndProvider($size, $provider, $type,"ram");
 
         // update kvm
         /** @var KartoVm $kvm */
         if (!($kvm = $this->em->getRepository(KartoVm::class)->findOneBy([
             "provider" => $provider,
-            "size"     => $size
+            "size"     => $size,
+            "type"     => $type
         ]))) {
             $kvm = new KartoVm();
             $kvm
@@ -89,7 +95,7 @@ class UpdateDatabaseVmCommand extends Command
                 ->setCpu($totCpu / $nbEntry)
                 ->setCost($totCost / $nbEntry)
                 ->setRam($totRam / $nbEntry)
-                ->setType("VM")
+                ->setType($type)
             ;
 
             $this->em->persist($kvm);
@@ -119,10 +125,15 @@ class UpdateDatabaseVmCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->section("Sync for provider {$provider}.");
 
-        $tot =  $this->syncBySize($io, $provider, "small");
-        $tot += $this->syncBySize($io, $provider, "medium");
-        $tot += $this->syncBySize($io, $provider, "big");
+        $totVm =  $this->syncBySize($io, $provider, "small", "vm");
+        $totVm += $this->syncBySize($io, $provider, "medium", "vm");
+        $totVm += $this->syncBySize($io, $provider, "big", "vm");
 
-        $io->success("Sync for provider {$provider} done. {$tot} entry checked.");
+        $totDb =  $this->syncBySize($io, $provider, "small", "db");
+        $totDb += $this->syncBySize($io, $provider, "medium", "db");
+        $totDb += $this->syncBySize($io, $provider, "big", "db");
+
+        $io->success("Sync for provider {$provider} done. {$totVm} vm entry checked.");
+        $io->success("Sync for provider {$provider} done. {$totDb} db entry checked.");
     }
 }
