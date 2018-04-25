@@ -22,12 +22,14 @@ class JsonToDatabaseCommand extends Command
      * @var array
      */
     protected static $toIgnore = ['.', '..'];
-
     /**
      * @var string
      */
     protected static $basePath = "jsonData/output";
-
+    /**
+     * @var int
+     */
+    private $created;
     /**
      * @var string
      */
@@ -60,6 +62,7 @@ class JsonToDatabaseCommand extends Command
         $this->em            = $em;
         $this->path          = $this->rootDir . '/../' . self::$basePath;
         $this->arrayProvider = [];
+        $this->created       = 0;
     }
 
     /**
@@ -113,7 +116,7 @@ class JsonToDatabaseCommand extends Command
 
         $io->progressFinish();
         $this->outputProvider($io);
-        $io->success("{$tot} Daily Karto VM updated !");
+        $io->success("{$tot} Daily Karto VM updated ({$this->created} created)! ");
         $io->error("{$error} corrupted json (No size specified nor ram nor cpu).");
     }
 
@@ -159,6 +162,7 @@ class JsonToDatabaseCommand extends Command
         if (!($dailyKartoVm = $this->em->getRepository(DailyKartoVm::class)
                                        ->findOneBy(["uniqueId" => $usableJson["name"]]))) {
             $dailyKartoVm = new DailyKartoVm();
+            $this->created++;
         }
 
         // set dkvm

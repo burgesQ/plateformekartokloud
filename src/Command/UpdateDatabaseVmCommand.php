@@ -17,11 +17,11 @@ class UpdateDatabaseVmCommand extends Command
 {
     /** @var string */
     protected static $defaultName = 'app:kartokloud:sync';
-    /** @var array  */
-    protected static $arraySize = [ "small", "medium", "big"];
-    /** @var array  */
-    protected static $arrayType = [ "vm", "db"];
-    /** @var array  */
+    /** @var array */
+    protected static $arraySize = ["small", "medium", "big"];
+    /** @var array */
+    protected static $arrayType = ["vm", "db"];
+    /** @var array */
     protected static $arrayFiled = ["cost", "cpu", "ram"];
     /** @var EntityManagerInterface */
     private $em;
@@ -41,6 +41,7 @@ class UpdateDatabaseVmCommand extends Command
 
     /**
      * Configure the command
+     *
      * @TODO auto
      */
     protected function configure()
@@ -50,6 +51,99 @@ class UpdateDatabaseVmCommand extends Command
             ->addArgument('provider', InputArgument::OPTIONAL, 'Provider to sync.')
             // todo not required
         ;
+    }
+
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
+    protected function execute(InputInterface $input, OutputInterface $output) : void
+    {
+        $provider = $input->getArgument('provider');
+        $io       = new SymfonyStyle($input, $output);
+
+        if (!$provider) {
+            $provider = $this->em->getRepository(DailyKartoVm::class)->getProviderInDatabase();
+        }
+
+        if (is_array($provider)) {
+            foreach ($provider as $oneProvider) {
+                $this->runForAProvider($io, $oneProvider[1]);
+            }
+        } else {
+            $this->runForAProvider($io, $provider);
+        }
+    }
+
+    /**
+     * @param SymfonyStyle $io
+     * @param string       $provider
+     *
+     * @throws NonUniqueResultException
+     */
+    public function runForAProvider(SymfonyStyle $io, string $provider) : void
+    {
+        $io->section("Sync for provider {$provider}.");
+        $tot = 0;
+
+        foreach (self::$arraySize as $oneSize) {
+            foreach (self::$arrayType as $oneType) {
+                $tot += $this->syncBySize($io, $provider, $oneSize, $oneType);
+            }
+        }
+
+        $io->success("Sync for provider {$provider} done. {$tot} entry checked.");
+    }
+
+    /**
+     * @param SymfonyStyle $io
+     * @param string       $provider
+     * @param string       $size
+     * @param string       $type
+     *
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    private function syncBySize(SymfonyStyle $io, string $provider, string $size, string $type) : int
+    {
+        $dailyKartoVmRepo = $this->em->getRepository(DailyKartoVm::class);
+        $dailyKVm         = $dailyKartoVmRepo->findBy([
+            "provider" => $provider,
+            "size"     => $size,
+            "type"     => $type
+        ]);
+
+        $nbEntry = count($dailyKVm);
+        $io->section("Their is {$nbEntry} daily karto {$type} for the provider {$provider} ({$size} size).");
+
+        if (!$nbEntry) {
+            return $nbEntry;
+        }
+
+        foreach (self::$arrayFiled as $field) {
+            $this->syncAFiled($provider, $size, $type, $field, $nbEntry);
+        }
+
+        return $nbEntry;
+    }
+
+    /**
+     * @param string $provider
+     * @param string $size
+     * @param string $type
+     * @param string $field
+     * @param int    $nbEntry
+     *
+     * @throws NonUniqueResultException
+     */
+    private function syncAFiled(string $provider, string $size, string $type, string $field, int $nbEntry) : void
+    {
+        /** @var int $val */
+        $val = $this->em->getRepository(DailyKartoVm::class)
+                        ->findAverageBySizeAndProvider($size, $provider, $type, $field)
+        ;
+
+        $this->majKvm($provider, $size, $type, $field, $nbEntry, $val);
     }
 
     /**
@@ -81,94 +175,10 @@ class UpdateDatabaseVmCommand extends Command
             ;
 
             $this->em->persist($kvm);
-        } else
+        } else {
             $kvm->$setter($val / $nbEntry);
-    }
-
-    /**
-     * @param string $provider
-     * @param string $size
-     * @param string $type
-     * @param string $field
-     * @param int    $nbEntry
-     *
-     * @throws NonUniqueResultException
-     */
-    private function syncAFiled(string $provider, string $size, string $type, string $field, int $nbEntry) : void
-    {
-        /** @var int $val */
-        $val = $this->em->getRepository(DailyKartoVm::class)
-                        ->findAverageBySizeAndProvider($size, $provider, $type, $field);
-
-        $this->majKvm($provider, $size, $type, $field, $nbEntry, $val);
-    }
-
-    /**
-     * @param SymfonyStyle $io
-     * @param string       $provider
-     * @param string       $size
-     * @param string       $type
-     *
-     * @return int
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    private function syncBySize(SymfonyStyle $io, string $provider, string $size, string $type) :int
-    {
-        $dailyKartoVmRepo = $this->em->getRepository(DailyKartoVm::class);
-        $dailyKVm = $dailyKartoVmRepo->findBy([
-            "provider" => $provider,
-            "size"     => $size,
-            "type"     => $type
-        ]);
-
-        $nbEntry = count($dailyKVm);
-        $io->section("Their is {$nbEntry} daily karto {$type} for the provider {$provider} ({$size} size).");
-
-        if (!$nbEntry)
-            return $nbEntry;
-
-        foreach (self::$arrayFiled as $field)
-            $this->syncAFiled($provider, $size, $type, $field, $nbEntry);
+        }
 
         $this->em->flush();
-
-        return $nbEntry;
-    }
-
-    /**
-     * @param SymfonyStyle $io
-     * @param string       $provider
-     *
-     * @throws NonUniqueResultException
-     */
-    public function runForAProvider(SymfonyStyle $io, string $provider) :void
-    {
-        $io->section("Sync for provider {$provider}.");
-        $tot = 0;
-
-        foreach (self::$arraySize as $oneSize)
-            foreach (self::$arrayType as $oneType)
-                $tot +=  $this->syncBySize($io, $provider, $oneSize, $oneType);
-
-        $io->success("Sync for provider {$provider} done. {$tot} db entry checked.");
-    }
-
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output) : void
-    {
-        $provider = $input->getArgument('provider');
-        $io = new SymfonyStyle($input, $output);
-
-        if (!$provider)
-            $provider = $this->em->getRepository(DailyKartoVm::class)->getProviderInDatabase();
-
-        if (is_array($provider))
-            foreach ($provider as $oneProvider)
-                $this->runForAProvider($io, $oneProvider[1]);
-        else
-            $this->runForAProvider($io, $provider);
     }
 }
