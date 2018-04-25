@@ -75,7 +75,7 @@ class DailyKartoVm
 
     /**
      * @var string
-     * @ORM\Column(name="region", type="string", nullable=false)
+     * @ORM\Column(name="region", type="string", nullable=true)
      * @JMS\Expose()
      */
     private $region;
