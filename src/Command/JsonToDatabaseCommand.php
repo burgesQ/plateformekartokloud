@@ -93,7 +93,7 @@ class JsonToDatabaseCommand extends Command
         $finder = new Finder();
 
         $path = $input->getArgument("path");
-        $path = ($path ? $path : $this->path);
+        $path = ($path ? $this->rootDir . '/../' . $path : $this->path);
 
         // get path to scrap
         $finder->files()->in($path);
