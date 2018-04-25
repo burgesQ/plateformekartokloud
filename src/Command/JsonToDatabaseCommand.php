@@ -2,13 +2,13 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Console\Command\Command;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Finder\Finder;
 use App\Entity\DailyKartoVm;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Finder\Finder;
 
 class JsonToDatabaseCommand extends Command
 {
@@ -26,6 +26,11 @@ class JsonToDatabaseCommand extends Command
      * @var string
      */
     protected static $basePath = "jsonData/output";
+
+    /**
+     * @var string
+     */
+    private $path;
 
     /**
      * @var string
@@ -50,6 +55,8 @@ class JsonToDatabaseCommand extends Command
 
         $this->rootDir = $kernel_root_dir;
         $this->em      = $em;
+        $this->path    = $this->rootDir . '/../' . self::$basePath;
+
     }
 
     /**
@@ -66,34 +73,6 @@ class JsonToDatabaseCommand extends Command
     }
 
     /**
-     * @param string $path
-     *
-     * @return mixed
-     */
-    private function epur_json(string $path)
-    {
-        $jsonData   = file_get_contents($path);
-        $jsonData   = str_replace("'", '"', $jsonData);
-        $jsonData   = str_replace(" ", '', $jsonData);
-
-        return json_decode($jsonData, true);
-    }
-
-    /**
-     * @param array $arrayToTest
-     *
-     * @return bool
-     */
-    private static function checkArray(array $arrayToTest) :bool
-    {
-        return (
-            array_key_exists("size", $arrayToTest)
-        &&     array_key_exists("nb_ram", $arrayToTest)
-        &&     array_key_exists("nb_cpu", $arrayToTest)
-        );
-    }
-
-    /**
      * @param InputInterface  $input
      * @param OutputInterface $output
      *
@@ -101,32 +80,35 @@ class JsonToDatabaseCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output) : void
     {
-        $io = new SymfonyStyle($input, $output);
+        $io            = new SymfonyStyle($input, $output);
+        $tot           = 0;
+        $error         = 0;
+        $arrayProvider = [];
+        $finder        = new Finder();
+        
+        $finder->files()->in($this->path);
 
-        $path = $this->rootDir . '/../' . self::$basePath;
-        $io->section("Let check the {$path} directory");
-        $tot = 0;
-        $error = 0;
-
-        $finder = new Finder();
-        $finder->files()->in($path);
-
+        $io->section("Let check the {$this->path} directory");
         $io->progressStart(count($finder));
-
-        $arrayProvider = array();
 
         foreach ($finder as $file) {
             $usableJson = $this->epur_json($file->getRealPath());
 
+            // if json usable
             if (self::checkArray($usableJson)) {
+
+                // if dkvm don't exist; create it
                 if (!($dailyKartoVm = $this->em->getRepository(DailyKartoVm::class)
                                                ->findOneBy(["uniqueId" => $usableJson["name"]]))) {
                     $dailyKartoVm = new DailyKartoVm();
                 }
 
-                if (!in_array($usableJson["provider"], $arrayProvider))
-                    $arrayProvider[] = $usableJson["provider"];
+                // init array dkvm if needed
+                if (!array_key_exists($usableJson["provider"], $arrayProvider)) {
+                    $arrayProvider[$usableJson["provider"]] = 0;
+                }
 
+                // set dkvm
                 $dailyKartoVm
                     ->setSize($usableJson["size"])
                     ->setProvider($usableJson["provider"])
@@ -138,20 +120,52 @@ class JsonToDatabaseCommand extends Command
                     ->setType($usableJson["type"])
                 ;
 
+                // save dkvm
                 $this->em->persist($dailyKartoVm);
                 $this->em->flush();
                 $tot += 1;
-            } else
+                $arrayProvider[$usableJson["provider"]]++;
+            } else {
                 $error++;
+            }
 
             $io->progressAdvance();
         }
         $io->progressFinish();
 
-        foreach ($arrayProvider as $oneProvider)
-            $io->success("{$oneProvider} successfully imported.");
+        foreach ($arrayProvider as $key => $val) {
+            $io->success("{$key} successfully imported ({$val} entries).");
+        }
 
         $io->success("{$tot} Daily Karto VM updated !");
         $io->error("{$error} corrupted json.");
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return mixed
+     */
+    private function epur_json(string $path)
+    {
+        $jsonData = file_get_contents($path);
+        $jsonData = str_replace("'", '"', $jsonData);
+        $jsonData = str_replace(" ", '', $jsonData);
+
+        return json_decode($jsonData, true);
+    }
+
+    /**
+     * @param array $arrayToTest
+     *
+     * @return bool
+     */
+    private static function checkArray(array $arrayToTest) : bool
+    {
+        return (
+            array_key_exists("size", $arrayToTest)
+            && array_key_exists("nb_ram", $arrayToTest)
+            && array_key_exists("nb_cpu", $arrayToTest)
+        );
     }
 }
